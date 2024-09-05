@@ -23,7 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Afficher le premier projet par défaut
     if (projects.length > 0) {
         const firstProjectName = projects[0].getAttribute('data-project-name');
         showProject(firstProjectName);
