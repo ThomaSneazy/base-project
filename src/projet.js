@@ -31,7 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Aucun projet trouvé dans .project__list');
     }
 
-    // Gestion des clics sur les boutons
     buttons.forEach(button => {
         button.addEventListener('click', () => {
             const projectName = button.getAttribute('data-project-name');
