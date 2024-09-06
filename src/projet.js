@@ -25,7 +25,6 @@ console.log("hey projects cursor");
     // Exécuter immédiatement
     enhanceVimeoQuality();
 
-    // Continuer à surveiller les changements du DOM
     var observer = new MutationObserver(function(mutations) {
         mutations.forEach(function(mutation) {
             if (mutation.type === 'childList') {
