@@ -1,46 +1,204 @@
-
 console.log("hey projects cursor");
-document.addEventListener('DOMContentLoaded', () => {
-    const buttons = document.querySelectorAll('.left [data-project-name]');
-    const projectList = document.querySelector('.project__list');
-    const projects = projectList ? projectList.querySelectorAll('.project__item') : [];
 
-    function showProject(projectName) {
-        projects.forEach(project => {
-            if (project.getAttribute('data-project-name') === projectName) {
-                project.style.display = 'block';
-            } else {
-                project.style.display = 'none';
+(function() {
+    function enhanceVimeoQuality() {
+        document.querySelectorAll('iframe[src^="https://player.vimeo.com/video/"]').forEach(function(iframe) {
+            let src = new URL(iframe.src);
+            
+            // Forcer la plus haute qualité
+            src.searchParams.set('quality', '1080p');
+            
+            // Désactiver la réduction automatique de la qualité
+            src.searchParams.set('dnt', '1');
+            
+            // Autres paramètres pour une lecture en arrière-plan
+            src.searchParams.set('background', '1');
+            src.searchParams.set('autoplay', '1');
+            src.searchParams.set('loop', '1');
+            src.searchParams.set('muted', '1');
+            
+            // Appliquer les changements
+            iframe.src = src.toString();
+        });
+    }
+
+    // Exécuter immédiatement
+    enhanceVimeoQuality();
+
+    // Continuer à surveiller les changements du DOM
+    var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.type === 'childList') {
+                enhanceVimeoQuality();
             }
         });
+    });
 
-        buttons.forEach(button => {
-            if (button.getAttribute('data-project-name') === projectName) {
-                button.classList.add('active');
-            } else {
-                button.classList.remove('active');
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+
+    // Exécuter à nouveau après le chargement complet de la page
+    window.addEventListener('load', enhanceVimeoQuality);
+})();
+
+(function() {
+    function removeVimeoScripts() {
+        // Supprimer les scripts externes de Vimeo
+        var scripts = document.querySelectorAll('script[src^="https://player.vimeo.com/api/player.js"]');
+        scripts.forEach(function(script) {
+            script.remove();
+        });
+
+        // Supprimer les scripts inline qui chargent le script Vimeo
+        var inlineScripts = document.querySelectorAll('script:not([src])');
+        inlineScripts.forEach(function(script) {
+            if (script.textContent.includes('https://player.vimeo.com/api/player.js')) {
+                script.remove();
             }
+        });
+    }
+
+    // Exécuter immédiatement
+    removeVimeoScripts();
+
+    // Continuer à surveiller les changements du DOM
+    var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.type === 'childList') {
+                removeVimeoScripts();
+            }
+        });
+    });
+
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+
+    // Exécuter à nouveau après le chargement complet de la page
+    window.addEventListener('load', removeVimeoScripts);
+})();
+
+/////////////Animation au click projet///////////
+document.addEventListener('DOMContentLoaded', () => {
+    const desktopButtons = document.querySelectorAll('.left [data-project-name]');
+    const mobileButtons = document.querySelectorAll('.mobile-buttons [data-project-name]');
+    const projectList = document.querySelector('.project__list');
+    const projects = projectList ? projectList.querySelectorAll('.project__item') : [];
+    const rightContainer = document.querySelector('.right');
+
+    function showProject(projectName, isMobile = false) {
+        const activeProject = Array.from(projects).find(project => project.style.display === 'block');
+        const newProject = Array.from(projects).find(project => project.getAttribute('data-project-name') === projectName);
+
+        if (activeProject) {
+            if (isMobile) {
+                gsap.to(activeProject, {
+                    opacity: 0,
+                    duration: 0.4,
+                    ease: "power2.out",
+                    onComplete: () => {
+                        activeProject.style.display = 'none';
+                        showNewProject();
+                    }
+                });
+            } else {
+                gsap.to(activeProject, {
+                    x: '100%',
+                    opacity: 0,
+                    duration: 0.8,
+                    ease: "power3.inOut",
+                    onComplete: () => {
+                        activeProject.style.display = 'none';
+                        gsap.set(activeProject, { x: '0%', opacity: 1 });
+                        showNewProject();
+                    }
+                });
+            }
+        } else {
+            showNewProject();
+        }
+
+        function showNewProject() {
+            if (newProject) {
+                projects.forEach(project => {
+                    if (project !== newProject) {
+                        project.style.display = 'none';
+                    }
+                });
+
+                if (rightContainer) {
+                    rightContainer.scrollTop = 0;
+                }
+
+                newProject.style.display = 'block';
+                if (isMobile) {
+                    gsap.fromTo(newProject, 
+                        { opacity: 0 },
+                        { 
+                            opacity: 1, 
+                            duration: 0.4, 
+                            ease: "power2.in"
+                        }
+                    );
+                } else {
+                    gsap.fromTo(newProject, 
+                        { y: '100%', opacity: 0 },
+                        { 
+                            y: '0%', 
+                            opacity: 1, 
+                            duration: 0.8, 
+                            ease: "power3.out"
+                        }
+                    );
+                }
+            }
+        }
+
+        updateButtonStates(projectName);
+    }
+
+    function updateButtonStates(projectName) {
+        [desktopButtons, mobileButtons].forEach(buttonSet => {
+            buttonSet.forEach(button => {
+                const projectToggle = button.querySelector('.project__toggle');
+                if (button.getAttribute('data-project-name') === projectName) {
+                    button.classList.add('active');
+                    if (projectToggle) projectToggle.classList.add('active');
+                } else {
+                    button.classList.remove('active');
+                    if (projectToggle) projectToggle.classList.remove('active');
+                }
+            });
         });
     }
 
     if (projects.length > 0) {
+        projects.forEach(project => {
+            project.style.display = 'none';
+        });
+
         const firstProjectName = projects[0].getAttribute('data-project-name');
         showProject(firstProjectName);
-        console.log('Premier projet affiché:', firstProjectName);
     } else {
         console.error('Aucun projet trouvé dans .project__list');
     }
 
-    buttons.forEach(button => {
+    desktopButtons.forEach(button => {
         button.addEventListener('click', () => {
             const projectName = button.getAttribute('data-project-name');
-            showProject(projectName);
+            showProject(projectName, false);
         });
     });
 
-    // Log pour le débogage
-    console.log('Nombre de projets trouvés:', projects.length);
-    console.log('Projets:', projects);
+    mobileButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const projectName = button.getAttribute('data-project-name');
+            showProject(projectName, true);
+        });
+    });
 });
 //////////////////////LOGO NAVBAR BLACK///////////////////////
 document.addEventListener('DOMContentLoaded', () => {
@@ -160,4 +318,3 @@ $(document).ready(function () {
       isSmallScreen = window.innerWidth <= 991;
     });
   });
-  
