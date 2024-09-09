@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-  console.log("hey blog cursor");
+  console.log("hey blog and client back");
   ////////////////////// MAIN FUNCTION //////////////////////
   function initializeBlogFunctionalities() {
     styleDarkBackgroundArticles();
@@ -7,9 +7,39 @@ document.addEventListener('DOMContentLoaded', function() {
     handleButtonAnimations();
     handleNavbarDropdown();
     handleColorBlocks();
-    handleClientAnchors()
+    handleClientAnchors();
+    handleNavbarLogo(); 
     // hideTransparentLogotypeBlocks()
   }
+
+
+//////////////////////LOGO NAVBAR BLACK///////////////////////
+function handleNavbarLogo() {
+  function updateNavbarLogo() {
+    const navbarLogo = document.querySelector('.navbar__logo');
+    if (navbarLogo) {
+      if (window.location.href.includes('pages-clients')) {
+        navbarLogo.style.color = '#131313';
+      } else {
+        navbarLogo.style.color = ''; 
+      }
+    }
+  }
+
+  updateNavbarLogo();
+
+  window.addEventListener('popstate', updateNavbarLogo);
+
+  document.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', (e) => {
+      setTimeout(updateNavbarLogo, 0);
+    });
+  });
+}
+
+
+
+
 
   ////////////////////// CLIENT ANCHORS //////////////////////
   function handleClientAnchors() {
@@ -17,23 +47,18 @@ document.addEventListener('DOMContentLoaded', function() {
   
     anchorItems.forEach(item => {
       item.addEventListener('click', function(e) {
-        // Empêcher le comportement par défaut si nécessaire
         // e.preventDefault();
   
-        // Trouver l'élément .project__toggle dans l'item cliqué
         const toggle = this.querySelector('.project__toggle');
   
-        // Retirer la classe .active de tous les .project__toggle
         document.querySelectorAll('.project__toggle.active').forEach(activeToggle => {
           activeToggle.classList.remove('active');
         });
   
-        // Ajouter la classe .active au .project__toggle de l'item cliqué
         if (toggle) {
           toggle.classList.add('active');
         }
   
-        // La redirection se fait automatiquement grâce au comportement par défaut du lien
       });
     });
   }
@@ -53,7 +78,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (gradientLink) {
           const gradientBg = gradientLink.getAttribute('data-color');
           if (gradientBg) {
-            // Nettoyer le gradient des variables CSS
             const cleanGradient = cleanGradientString(gradientBg);
             block.style.background = cleanGradient;
             bgColor = cleanGradient;
@@ -96,7 +120,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   
     function cleanGradientString(gradient) {
-      // Retire les variables CSS et les virgules trailing
       return gradient.replace(/var\([^)]+\)/g, '').replace(/,\s*$/, '').trim();
     }
   

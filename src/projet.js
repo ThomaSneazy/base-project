@@ -5,24 +5,19 @@ console.log("hey projects cursor");
         document.querySelectorAll('iframe[src^="https://player.vimeo.com/video/"]').forEach(function(iframe) {
             let src = new URL(iframe.src);
             
-            // Forcer la plus haute qualité
             src.searchParams.set('quality', '1080p');
             
-            // Désactiver la réduction automatique de la qualité
             src.searchParams.set('dnt', '1');
             
-            // Autres paramètres pour une lecture en arrière-plan
             src.searchParams.set('background', '1');
             src.searchParams.set('autoplay', '1');
             src.searchParams.set('loop', '1');
             src.searchParams.set('muted', '1');
             
-            // Appliquer les changements
             iframe.src = src.toString();
         });
     }
 
-    // Exécuter immédiatement
     enhanceVimeoQuality();
 
     var observer = new MutationObserver(function(mutations) {
@@ -38,19 +33,16 @@ console.log("hey projects cursor");
         subtree: true
     });
 
-    // Exécuter à nouveau après le chargement complet de la page
     window.addEventListener('load', enhanceVimeoQuality);
 })();
 
 (function() {
     function removeVimeoScripts() {
-        // Supprimer les scripts externes de Vimeo
         var scripts = document.querySelectorAll('script[src^="https://player.vimeo.com/api/player.js"]');
         scripts.forEach(function(script) {
             script.remove();
         });
 
-        // Supprimer les scripts inline qui chargent le script Vimeo
         var inlineScripts = document.querySelectorAll('script:not([src])');
         inlineScripts.forEach(function(script) {
             if (script.textContent.includes('https://player.vimeo.com/api/player.js')) {
@@ -59,10 +51,8 @@ console.log("hey projects cursor");
         });
     }
 
-    // Exécuter immédiatement
     removeVimeoScripts();
 
-    // Continuer à surveiller les changements du DOM
     var observer = new MutationObserver(function(mutations) {
         mutations.forEach(function(mutation) {
             if (mutation.type === 'childList') {
@@ -76,7 +66,6 @@ console.log("hey projects cursor");
         subtree: true
     });
 
-    // Exécuter à nouveau après le chargement complet de la page
     window.addEventListener('load', removeVimeoScripts);
 })();
 

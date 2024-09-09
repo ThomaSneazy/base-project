@@ -458,15 +458,19 @@ cardItems.forEach(item => {
   }
 });
 
-/////////////////
-$(document).ready(function() {
-  $('.button-marque__block').on('mouseenter', function() {
-    $(this).addClass('active');
-    $(this).find('.button-marque-arrow').addClass('active');
+/////////////////////BUTTON MARQUE/////////////////////
+document.addEventListener('DOMContentLoaded', function() {
+  const buttonMarqueBlocks = document.querySelectorAll('.button-marque__block');
+  
+  buttonMarqueBlocks.forEach(function(block) {
+    block.addEventListener('mouseenter', function() {
+      this.classList.add('active');
+      this.querySelector('.button-marque-arrow').classList.add('active');
+    });
   });
 });
 
-/////////////////////
+/////////////////////POPUP/////////////////////
 $(document).ready(function() {
   gsap.set('.popup__item, .popup__overlay', { display: 'none', opacity: 0 });
 
