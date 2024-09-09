@@ -1,19 +1,182 @@
-console.log("hey blog cursor");
-//////////////////////NAVBAR DROPDOWN//////////////////////
-
 document.addEventListener('DOMContentLoaded', function() {
-  const richTextBlog = document.querySelector('.rich-text-blog');
-  if (!richTextBlog) return;
+  console.log("hey blog cursor");
+  ////////////////////// MAIN FUNCTION //////////////////////
+  function initializeBlogFunctionalities() {
+    styleDarkBackgroundArticles();
+    handleHeadingsAndButtons();
+    handleButtonAnimations();
+    handleNavbarDropdown();
+    handleColorBlocks();
+    handleClientAnchors()
+    // hideTransparentLogotypeBlocks()
+  }
 
-  // Cacher tous les conteneurs .heading__blog__container existants
-  const existingContainers = document.querySelectorAll('.heading__blog__container');
-  existingContainers.forEach(container => {
-      container.style.display = 'none';
-  });
-
-  const h2Elements = richTextBlog.querySelectorAll('h2');
+  ////////////////////// CLIENT ANCHORS //////////////////////
+  function handleClientAnchors() {
+    const anchorItems = document.querySelectorAll('.anchor__client__item');
   
-  h2Elements.forEach((h2, index) => {
+    anchorItems.forEach(item => {
+      item.addEventListener('click', function(e) {
+        // Empêcher le comportement par défaut si nécessaire
+        // e.preventDefault();
+  
+        // Trouver l'élément .project__toggle dans l'item cliqué
+        const toggle = this.querySelector('.project__toggle');
+  
+        // Retirer la classe .active de tous les .project__toggle
+        document.querySelectorAll('.project__toggle.active').forEach(activeToggle => {
+          activeToggle.classList.remove('active');
+        });
+  
+        // Ajouter la classe .active au .project__toggle de l'item cliqué
+        if (toggle) {
+          toggle.classList.add('active');
+        }
+  
+        // La redirection se fait automatiquement grâce au comportement par défaut du lien
+      });
+    });
+  }
+  
+  
+
+  ////////////////////// COLOR BLOCKS //////////////////////
+  function handleColorBlocks() {
+    const colorBlocks = document.querySelectorAll('.logotype__block__color');
+  
+    colorBlocks.forEach(block => {
+      const links = block.querySelectorAll('a[data-color]');
+      let bgColor, rgb;
+  
+      if (block.classList.contains('is-gradient')) {
+        const gradientLink = block.querySelector('a[data-color]');
+        if (gradientLink) {
+          const gradientBg = gradientLink.getAttribute('data-color');
+          if (gradientBg) {
+            // Nettoyer le gradient des variables CSS
+            const cleanGradient = cleanGradientString(gradientBg);
+            block.style.background = cleanGradient;
+            bgColor = cleanGradient;
+          }
+        }
+      } else {
+        bgColor = getComputedStyle(block).backgroundColor;
+        rgb = bgColor.match(/\d+/g).map(Number);
+      }
+  
+      links.forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const colorType = this.getAttribute('data-color');
+          let colorCode;
+  
+          if (block.classList.contains('is-gradient')) {
+            colorCode = cleanGradientString(colorType);
+          } else {
+            switch(colorType) {
+              case 'cmjn':
+                const cmjn = rgbToCmyk(rgb[0], rgb[1], rgb[2]);
+                colorCode = `C:${cmjn.c}% M:${cmjn.m}% J:${cmjn.y}% N:${cmjn.k}%`;
+                break;
+              case 'rvb':
+                colorCode = `R:${rgb[0]} V:${rgb[1]} B:${rgb[2]}`;
+                break;
+              case 'hexa':
+                colorCode = rgbToHex(rgb[0], rgb[1], rgb[2]);
+                break;
+              default:
+                console.error('Type de couleur non reconnu');
+                return;
+            }
+          }
+  
+          copyToClipboard(colorCode);
+        });
+      });
+    });
+  
+    function cleanGradientString(gradient) {
+      // Retire les variables CSS et les virgules trailing
+      return gradient.replace(/var\([^)]+\)/g, '').replace(/,\s*$/, '').trim();
+    }
+  
+    function rgbToCmyk(r, g, b) {
+      let c = 1 - (r / 255);
+      let m = 1 - (g / 255);
+      let y = 1 - (b / 255);
+      let k = Math.min(c, m, y);
+  
+      c = (c - k) / (1 - k) || 0;
+      m = (m - k) / (1 - k) || 0;
+      y = (y - k) / (1 - k) || 0;
+  
+      return {
+        c: Math.round(c * 100),
+        m: Math.round(m * 100),
+        y: Math.round(y * 100),
+        k: Math.round(k * 100)
+      };
+    }
+  
+    function rgbToHex(r, g, b) {
+      return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase();
+    }
+  
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        alert('Code couleur ou gradient copié : ' + text);
+      }).catch(err => {
+        console.error('Erreur lors de la copie :', err);
+      });
+    }
+  }
+  
+  
+
+  ////////////////////// DARK BACKGROUND STYLING //////////////////////
+  function styleDarkBackgroundArticles() {
+    const bgArticles = document.querySelectorAll('.bg-article');
+    bgArticles.forEach(bgArticle => {
+      const blogArticle = bgArticle.closest('.blog__article');
+      if (blogArticle) {
+        const bgColor = bgArticle.style.backgroundColor || window.getComputedStyle(bgArticle).backgroundColor;
+        if (bgColor === 'rgb(19, 19, 19)' || bgColor === '#131313') {
+          blogArticle.style.color = 'white';
+          
+          blogArticle.querySelectorAll('.is-poste').forEach(element => {
+            element.style.color = '#8ddd8d';
+          });
+          
+          const iconArrowBlock = blogArticle.querySelector('.icon-arrow-block') || 
+                                 bgArticle.querySelector('.icon-arrow-block');
+          
+          if (iconArrowBlock) {
+            blogArticle.addEventListener('mouseenter', () => {
+              iconArrowBlock.style.backgroundColor = 'white';
+              iconArrowBlock.style.color = '#131313';
+            });
+            
+            blogArticle.addEventListener('mouseleave', () => {
+              iconArrowBlock.style.backgroundColor = '';
+              iconArrowBlock.style.color = '';
+            });
+          }
+        }
+      }
+    });
+  }
+
+  ////////////////////// HEADINGS AND BUTTONS //////////////////////
+  function handleHeadingsAndButtons() {
+    const richTextBlog = document.querySelector('.rich-text-blog');
+    if (!richTextBlog) return;
+
+    document.querySelectorAll('.heading__blog__container').forEach(container => {
+      container.style.display = 'none';
+    });
+
+    const h2Elements = richTextBlog.querySelectorAll('h2');
+    h2Elements.forEach((h2, index) => {
       const headingContainer = document.createElement('div');
       headingContainer.className = 'heading__blog__container';
       headingContainer.id = `heading-${index + 1}`;
@@ -21,158 +184,75 @@ document.addEventListener('DOMContentLoaded', function() {
       h2.parentNode.insertBefore(headingContainer, h2);
       headingContainer.appendChild(h2);
 
-      // Afficher le bouton d'ancrage correspondant
-      const buttonSelector = `.button__anchor__blog.is-chap-${index + 1}`;
-      const button = document.querySelector(buttonSelector);
+      const button = document.querySelector(`.button__anchor__blog.is-chap-${index + 1}`);
       if (button) {
-          button.style.display = 'block'; // ou 'inline-block' selon votre mise en page
-          
-          // Ajouter l'événement de clic pour le défilement fluide
-          button.addEventListener('click', function() {
-              const targetHeading = document.getElementById(`heading-${index + 1}`);
-              if (targetHeading) {
-                  scrollToElement(targetHeading, 1500); // 1500ms de durée d'animation
-              }
-          });
-      }
-  });
-
-  // Cacher les boutons d'ancrage en trop
-  for (let i = h2Elements.length + 1; i <= 5; i++) {
-      const buttonSelector = `.button__anchor__blog.is-chap-${i}`;
-      const button = document.querySelector(buttonSelector);
-      if (button) {
-          button.style.display = 'none';
-      }
-  }
-
-  // Fonction de défilement fluide
-  function scrollToElement(element, duration) {
-      const start = window.pageYOffset;
-      const target = element.getBoundingClientRect().top + start - 50; // 50px offset
-      const startTime = performance.now();
-      
-      function step(currentTime) {
-          const elapsed = currentTime - startTime;
-          const progress = Math.min(elapsed / duration, 1);
-          const ease = easeInOutQuad(progress);
-          window.scrollTo(0, start + (target - start) * ease);
-          
-          if (progress < 1) {
-              requestAnimationFrame(step);
+        button.style.display = 'block';
+        button.addEventListener('click', () => {
+          const targetHeading = document.getElementById(`heading-${index + 1}`);
+          if (targetHeading) {
+            scrollToElement(targetHeading, 1500);
           }
+        });
       }
-      
-      requestAnimationFrame(step);
+    });
+
+    for (let i = h2Elements.length + 1; i <= 5; i++) {
+      const button = document.querySelector(`.button__anchor__blog.is-chap-${i}`);
+      if (button) {
+        button.style.display = 'none';
+      }
+    }
   }
 
-  // Fonction d'easing
-  function easeInOutQuad(t) {
-      return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-  }
-
-  // Effets de survol des boutons
-  const buttons = document.querySelectorAll('.button__anchor__blog');
-  buttons.forEach(button => {
+  ////////////////////// BUTTON ANIMATIONS //////////////////////
+  function handleButtonAnimations() {
+    const buttons = document.querySelectorAll(".button__anchor__blog");
+    buttons.forEach(button => {
       button.addEventListener('mouseenter', function() {
-          let hoverColor = "#8ddd8d"; // Couleur par défaut (vert)
+        const hoverColors = {
+          "is-chap-1": "#e0e055",
+          "is-chap-2": "#8ddd8d",
+          "is-chap-3": "#6066ee",
+          "is-chap-4": "#faaafa",
+          "is-chap-5": "#FFFFFF"
+        };
+        const hoverColor = hoverColors[this.classList[1]] || "#8ddd8d";
 
-          if (this.classList.contains("is-chap-1")) {
-              hoverColor = "#ffff00"; // Jaune
-          } else if (this.classList.contains("is-chap-2")) {
-              hoverColor = "#00ff00"; // Vert
-          } else if (this.classList.contains("is-chap-3")) {
-              hoverColor = "#0000ff"; // Bleu
-          } else if (this.classList.contains("is-chap-4")) {
-              hoverColor = "#ff69b4"; // Rose
-          } else if (this.classList.contains("is-chap-5")) {
-              hoverColor = "#FFFFFF"; // Blanc
-          }
-
-          const fakeArrow = this.querySelector('.fake-arrow-width');
-          if (fakeArrow) {
-              fakeArrow.style.transition = 'width 0.8s ease-in-out';
-              fakeArrow.style.width = '100%';
-          }
-
-          this.style.transition = 'all 0.8s ease-in-out';
-          this.style.paddingLeft = '1.11rem';
-          this.style.paddingRight = '3.4rem';
-          this.style.backgroundColor = hoverColor;
-          this.style.color = '#131313';
+        gsap.to(this.querySelector(".fake-arrow-width"), {
+          width: "100%",
+          duration: 0.6,
+          ease: "power2.inOut",
+        });
+        gsap.to(this, {
+          paddingLeft: "1.11rem",
+          paddingRight: "3.4rem",
+          backgroundColor: hoverColor,
+          color: "#131313",
+          duration: 0.6,
+          ease: "power2.inOut",
+        });
       });
 
       button.addEventListener('mouseleave', function() {
-          const fakeArrow = this.querySelector('.fake-arrow-width');
-          if (fakeArrow) {
-              fakeArrow.style.transition = 'width 0.8s ease-in-out';
-              fakeArrow.style.width = '0%';
-          }
-
-          this.style.transition = 'all 0.8s ease-in-out';
-          this.style.paddingLeft = '3.4rem';
-          this.style.paddingRight = '1.11rem';
-          this.style.backgroundColor = '#2b2b2b';
-          this.style.color = '#ffffff';
-      });
-  });
-});
-
-
-document.addEventListener('DOMContentLoaded', function () {
-  const buttons = document.querySelectorAll(".button__anchor__blog");
-
-  buttons.forEach(button => {
-    button.addEventListener('mouseenter', function () {
-      let hoverColor = "#8ddd8d"; // Couleur par défaut (vert)
-
-      if (this.classList.contains("is-chap-1")) {
-        hoverColor = "#e0e055"; // Jaune
-      } else if (this.classList.contains("is-chap-2")) {
-        hoverColor = "#8ddd8d"; // Vert
-      } else if (this.classList.contains("is-chap-3")) {
-        hoverColor = "#6066ee"; // Bleu
-      } else if (this.classList.contains("is-chap-4")) {
-        hoverColor = "#faaafa"; // Rose
-      }
-
-      gsap.to(this.querySelector(".fake-arrow-width"), {
-        width: "100%",
-        duration: 0.2,
-        ease: "power2.inOut",
-      });
-      gsap.to(this, {
-        paddingLeft: "1.11rem",
-        paddingRight: "3.4rem",
-        backgroundColor: hoverColor,
-        color: "#131313",
-        duration: 0.2,
-        ease: "power2.inOut",
+        gsap.to(this.querySelector(".fake-arrow-width"), {
+          width: "0%",
+          duration: 0.8,
+          ease: "power2.inOut",
+        });
+        gsap.to(this, {
+          paddingLeft: "3.4rem",
+          paddingRight: "1.11rem",
+          backgroundColor: "#2b2b2b",
+          color: "#ffffff",
+          duration: 0.8,
+          ease: "power2.inOut",
+        });
       });
     });
+  }
 
-    button.addEventListener('mouseleave', function () {
-      gsap.to(this.querySelector(".fake-arrow-width"), {
-        width: "0%",
-        duration: 0.8,
-        ease: "power2.inOut",
-      });
-      gsap.to(this, {
-        paddingLeft: "3.4rem",
-        paddingRight: "1.11rem",
-        backgroundColor: "#2b2b2b",
-        color: "#ffffff",
-        duration: 0.8,
-        ease: "power2.inOut",
-      });
-      // Supprimé les animations pour .icon-arrow-green-block
-    });
-  });
-});
-
-
-
-$(document).ready(function () {
+  ////////////////////// NAVBAR DROPDOWN //////////////////////
+  function handleNavbarDropdown() {
     const $buttonDrop = $(".button-drop");
     const $dropdownWrapper = $(".dropdown__list__wrapper");
     const $dropdownItems = $dropdownWrapper.find(".dropdown__item");
@@ -238,7 +318,7 @@ $(document).ready(function () {
           clearTimeout(timeoutId);
           showDropdown();
         } else if (event.type === 'mouseleave') {
-          timeoutId = setTimeout(function () {
+          timeoutId = setTimeout(() => {
             if (!$dropdownWrapper.is(":hover")) {
               hideDropdown();
             }
@@ -249,9 +329,9 @@ $(document).ready(function () {
   
     $buttonDrop.on("mouseenter mouseleave click", handleInteraction);
   
-    $dropdownWrapper.on("mouseleave", function () {
+    $dropdownWrapper.on("mouseleave", () => {
       if (!isSmallScreen) {
-        timeoutId = setTimeout(function () {
+        timeoutId = setTimeout(() => {
           if (!$buttonDrop.is(":hover")) {
             hideDropdown();
           }
@@ -259,7 +339,35 @@ $(document).ready(function () {
       }
     });
   
-    $(window).on('resize', function() {
+    $(window).on('resize', () => {
       isSmallScreen = window.innerWidth <= 991;
     });
-  });
+  }
+
+  ////////////////////// HELPER FUNCTIONS //////////////////////
+  function scrollToElement(element, duration) {
+    const start = window.pageYOffset;
+    const target = element.getBoundingClientRect().top + start - 50;
+    const startTime = performance.now();
+    
+    function step(currentTime) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const ease = easeInOutQuad(progress);
+      window.scrollTo(0, start + (target - start) * ease);
+      
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      }
+    }
+    
+    requestAnimationFrame(step);
+  }
+
+  function easeInOutQuad(t) {
+    return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+  }
+
+  // Initialize all functionalities
+  initializeBlogFunctionalities();
+});
