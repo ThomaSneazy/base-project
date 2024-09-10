@@ -1,6 +1,6 @@
 
 document.addEventListener('DOMContentLoaded', function () {
-    console.log("hey 404");
+    // console.log("hey 404");
     
     ////////////////////// MAIN FUNCTION //////////////////////
     function initializeContactFunctionalities() {

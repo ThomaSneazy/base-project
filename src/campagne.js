@@ -1,5 +1,5 @@
 
-console.log("hey campagne from cursor");
+// console.log("hey campagne from cursor");
 
 import { initLoader } from "./loader.js";
 window.addEventListener('load', initLoader);

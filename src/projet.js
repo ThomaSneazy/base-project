@@ -1,29 +1,38 @@
-console.log("hey projects cursor");
+import { initLoader } from "./loader.js";
 
-(function() {
-    function enhanceVimeoQuality() {
+// Fonction d'initialisation globale
+function initProjetPage() {
+    initLoader();
+    enhanceVimeoQuality();
+    setupVimeoScriptRemoval();
+    setupProjectAnimation();
+    setupNavbarLogoColor();
+    handleNavbarDropdown();
+}
+
+
+
+// Fonction pour améliorer la qualité Vimeo
+function enhanceVimeoQuality() {
+    function updateVimeoIframes() {
         document.querySelectorAll('iframe[src^="https://player.vimeo.com/video/"]').forEach(function(iframe) {
             let src = new URL(iframe.src);
-            
             src.searchParams.set('quality', '1080p');
-            
             src.searchParams.set('dnt', '1');
-            
             src.searchParams.set('background', '1');
             src.searchParams.set('autoplay', '1');
             src.searchParams.set('loop', '1');
             src.searchParams.set('muted', '1');
-            
             iframe.src = src.toString();
         });
     }
 
-    enhanceVimeoQuality();
+    updateVimeoIframes();
 
-    var observer = new MutationObserver(function(mutations) {
-        mutations.forEach(function(mutation) {
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
             if (mutation.type === 'childList') {
-                enhanceVimeoQuality();
+                updateVimeoIframes();
             }
         });
     });
@@ -32,19 +41,13 @@ console.log("hey projects cursor");
         childList: true,
         subtree: true
     });
+}
 
-    window.addEventListener('load', enhanceVimeoQuality);
-})();
-
-(function() {
+// Fonction pour supprimer les scripts Vimeo
+function setupVimeoScriptRemoval() {
     function removeVimeoScripts() {
-        var scripts = document.querySelectorAll('script[src^="https://player.vimeo.com/api/player.js"]');
-        scripts.forEach(function(script) {
-            script.remove();
-        });
-
-        var inlineScripts = document.querySelectorAll('script:not([src])');
-        inlineScripts.forEach(function(script) {
+        document.querySelectorAll('script[src^="https://player.vimeo.com/api/player.js"]').forEach(script => script.remove());
+        document.querySelectorAll('script:not([src])').forEach(script => {
             if (script.textContent.includes('https://player.vimeo.com/api/player.js')) {
                 script.remove();
             }
@@ -53,8 +56,8 @@ console.log("hey projects cursor");
 
     removeVimeoScripts();
 
-    var observer = new MutationObserver(function(mutations) {
-        mutations.forEach(function(mutation) {
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
             if (mutation.type === 'childList') {
                 removeVimeoScripts();
             }
@@ -65,12 +68,10 @@ console.log("hey projects cursor");
         childList: true,
         subtree: true
     });
+}
 
-    window.addEventListener('load', removeVimeoScripts);
-})();
-
-/////////////Animation au click projet///////////
-document.addEventListener('DOMContentLoaded', () => {
+// Fonction pour l'animation des projets
+function setupProjectAnimation() {
     const desktopButtons = document.querySelectorAll('.left [data-project-name]');
     const mobileButtons = document.querySelectorAll('.mobile-buttons [data-project-name]');
     const projectList = document.querySelector('.project__list');
@@ -187,35 +188,26 @@ document.addEventListener('DOMContentLoaded', () => {
             showProject(projectName, true);
         });
     });
-});
-//////////////////////LOGO NAVBAR BLACK///////////////////////
-document.addEventListener('DOMContentLoaded', () => {
+}
+
+// Fonction pour mettre à jour la couleur du logo de la navbar
+function setupNavbarLogoColor() {
     function updateNavbarLogo() {
         const navbarLogo = document.querySelector('.navbar__logo');
         if (navbarLogo) {
-            if (window.location.href.includes('projets')) {
-                navbarLogo.style.color = '#131313';
-            } else {
-                navbarLogo.style.color = ''; 
-            }
+            navbarLogo.style.color = window.location.href.includes('projets') ? '#131313' : '';
         }
     }
 
     updateNavbarLogo();
-
     window.addEventListener('popstate', updateNavbarLogo);
-
     document.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', (e) => {
-            setTimeout(updateNavbarLogo, 0);
-        });
+        link.addEventListener('click', () => setTimeout(updateNavbarLogo, 0));
     });
-});
+}
 
-
-//////////////////////NAVBAR DROPDOWN//////////////////////
-
-$(document).ready(function () {
+////////////////////// NAVBAR DROPDOWN //////////////////////
+function handleNavbarDropdown() {
     const $buttonDrop = $(".button-drop");
     const $dropdownWrapper = $(".dropdown__list__wrapper");
     const $dropdownItems = $dropdownWrapper.find(".dropdown__item");
@@ -281,7 +273,7 @@ $(document).ready(function () {
           clearTimeout(timeoutId);
           showDropdown();
         } else if (event.type === 'mouseleave') {
-          timeoutId = setTimeout(function () {
+          timeoutId = setTimeout(() => {
             if (!$dropdownWrapper.is(":hover")) {
               hideDropdown();
             }
@@ -292,9 +284,9 @@ $(document).ready(function () {
   
     $buttonDrop.on("mouseenter mouseleave click", handleInteraction);
   
-    $dropdownWrapper.on("mouseleave", function () {
+    $dropdownWrapper.on("mouseleave", () => {
       if (!isSmallScreen) {
-        timeoutId = setTimeout(function () {
+        timeoutId = setTimeout(() => {
           if (!$buttonDrop.is(":hover")) {
             hideDropdown();
           }
@@ -302,7 +294,12 @@ $(document).ready(function () {
       }
     });
   
-    $(window).on('resize', function() {
+    $(window).on('resize', () => {
       isSmallScreen = window.innerWidth <= 991;
     });
-  });
+  }
+
+  
+
+// Appel de la fonction d'initialisation globale
+document.addEventListener('DOMContentLoaded', initProjetPage);

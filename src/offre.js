@@ -1,6 +1,6 @@
 
 
-console.log("offre-cursor");
+// console.log("offre-cursor");
 import { initLoader } from "./loader.js";
 window.addEventListener('load', initLoader);
 
@@ -384,7 +384,7 @@ document.addEventListener('DOMContentLoaded', () => {
           end: 'bottom 20%',
           scrub: 0.5,
           toggleActions: 'play none none reverse',
-          markers: true,
+          // markers: true,
         }
       });
     } else {
