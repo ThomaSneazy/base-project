@@ -1,3 +1,6 @@
+import { initLoader } from "./loader.js";
+
+
 document.addEventListener('DOMContentLoaded', function() {
   console.log("hey blog and client back");
   ////////////////////// MAIN FUNCTION //////////////////////
@@ -9,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
     handleColorBlocks();
     handleClientAnchors();
     handleNavbarLogo(); 
-    // hideTransparentLogotypeBlocks()
+    initLoader();
   }
 
 

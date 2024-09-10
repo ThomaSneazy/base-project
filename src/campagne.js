@@ -1,9 +1,10 @@
 
 console.log("hey campagne from cursor");
 
+import { initLoader } from "./loader.js";
+window.addEventListener('load', initLoader);
 
-
-//////////////////////COMMENTAIRE ICI//////////////////////
+//////////////////////BOUTON ANCHOR CAMPAGNE///////////////////////
 document.addEventListener('DOMContentLoaded', () => {
     const buttons = document.querySelectorAll('[data-anchor]');
     const anchorActives = document.querySelectorAll('.anchor-active');
@@ -20,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
             resetAllAnchors();
             setTimeout(() => {
                 targetAnchor.classList.add('active');
-            }, 300); // Délai de 300ms avant d'ajouter la classe active
+            }, 300); 
         }
     }
 
@@ -58,21 +59,27 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 100); 
     });
 });
-//////////////////////COMMENTAIRE ICI///////////////////////
-$(document).ready(function () {
-  $(".button__contact__nav.is-anchor").hover(
-    function () {
-      // Déterminer la couleur en fonction de la classe
+
+
+
+//////////////////////BOUTON ANCHOR HOVER ANIMATION///////////////////////
+document.addEventListener('DOMContentLoaded', function() {
+  const buttons = document.querySelectorAll(".button__contact__nav.is-anchor");
+
+  buttons.forEach(button => {
+    button.addEventListener('mouseenter', function() {
       let color = "#8ddd8d"; // Couleur par défaut (vert)
-      if ($(this).find(".icon-arrow-green-block").hasClass("is-digitale")) {
+      const iconArrow = this.querySelector(".icon-arrow-green-block");
+      if (iconArrow.classList.contains("is-digitale")) {
         color = "#faaafa"; // Rose pour .is-digitale
-      } else if ($(this).find(".icon-arrow-green-block").hasClass("is-mixte")) {
+      } else if (iconArrow.classList.contains("is-mixte")) {
         color = "#e0e055"; // Jaune pour .is-mixte
-      } else if ($(this).find(".icon-arrow-green-block").hasClass("is-event")) {
+      } else if (iconArrow.classList.contains("is-event")) {
         color = "#6066ee"; // Bleu pour .is-event
       }
 
-      gsap.to($(this).find(".fake-arrow-width"), {
+      const fakeArrow = this.querySelector(".fake-arrow-width");
+      gsap.to(fakeArrow, {
         width: "100%",
         duration: 0.8,
         ease: "power2.inOut",
@@ -85,29 +92,31 @@ $(document).ready(function () {
         duration: 0.8,
         ease: "power2.inOut",
       });
-      gsap.to($(this).find(".icon-arrow-green-block"), {
+      gsap.to(iconArrow, {
         backgroundColor: "#131313",
         duration: 0.8,
         ease: "power2.inOut",
       });
-      gsap.to($(this).find(".icon-arrow-green-block svg"), {
+      gsap.to(iconArrow.querySelector('svg'), {
         color: "#ffffff",
         duration: 0.8,
         ease: "power2.inOut",
       });
-    },
-    function () {
-      // Déterminer la couleur en fonction de la classe (même logique que ci-dessus)
+    });
+
+    button.addEventListener('mouseleave', function() {
       let color = "#8ddd8d";
-      if ($(this).find(".icon-arrow-green-block").hasClass("is-digitale")) {
+      const iconArrow = this.querySelector(".icon-arrow-green-block");
+      if (iconArrow.classList.contains("is-digitale")) {
         color = "#faaafa";
-      } else if ($(this).find(".icon-arrow-green-block").hasClass("is-mixte")) {
+      } else if (iconArrow.classList.contains("is-mixte")) {
         color = "#e0e055";
-      } else if ($(this).find(".icon-arrow-green-block").hasClass("is-event")) {
+      } else if (iconArrow.classList.contains("is-event")) {
         color = "#6066ee";
       }
 
-      gsap.to($(this).find(".fake-arrow-width"), {
+      const fakeArrow = this.querySelector(".fake-arrow-width");
+      gsap.to(fakeArrow, {
         width: "0%",
         duration: 0.8,
         ease: "power2.inOut",
@@ -120,18 +129,18 @@ $(document).ready(function () {
         duration: 0.8,
         ease: "power2.inOut",
       });
-      gsap.to($(this).find(".icon-arrow-green-block"), {
+      gsap.to(iconArrow, {
         backgroundColor: color,
         duration: 0.8,
         ease: "power2.inOut",
       });
-      gsap.to($(this).find(".icon-arrow-green-block svg"), {
+      gsap.to(iconArrow.querySelector('svg'), {
         color: "#131313",
         duration: 0.8,
         ease: "power2.inOut",
       });
-    }
-  );
+    });
+  });
 });
 
 

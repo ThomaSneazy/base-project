@@ -1,69 +1,104 @@
-import { initLoader } from "./loader.js";
-
 
 document.addEventListener('DOMContentLoaded', function () {
-    console.log("hey contact");
+    console.log("hey 404");
+    
     ////////////////////// MAIN FUNCTION //////////////////////
     function initializeContactFunctionalities() {
-        handleButtonAnimations();
         handleNavbarDropdown();
         handleNavbarLogo();
-        handleButtonMarqueHover();
-        initializePhoneAnimations();
-        initLoader();
+        handle404ButtonAnimation();
     }
+    
 
+    ////////////////////// 404 BUTTON ANIMATION //////////////////////
+    function handle404ButtonAnimation() {
+        const colors = ['pink', 'green', 'yellow', 'blue'];
+        const buttons = document.querySelectorAll('.button__anchor__blog.is-404');
 
+        gsap.set(buttons, { scale: 0.7, opacity: 0 });
 
-    ////////////////////// PHONE ANIMATIONS //////////////////////
-    function initializePhoneAnimations() {
-        const lottieOff = document.querySelector('.phone__lottie.is-off');
-        const lottieCall = document.querySelector('.phone__lottie.is-call');
-        const lottieForm = document.querySelector('.phone__lottie.is-form');
-        const callButton = document.querySelector('.contact__button.is-call');
-        const formButton = document.querySelector('.contact__button.is-form');
+        function showButtonAndApplyColor(button, index) {
+            gsap.to(button, {
+                scale: 1,
+                opacity: 1,
+                duration: 0.3,
+                ease: "back.out(1.7)",
+                delay: Math.random() * 0.05, 
+                onComplete: () => {
+                    gsap.delayedCall(index * 0.02, () => {
+                        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                        button.classList.add(randomColor);
+                    });
 
-        lottieOff.style.display = 'block';
-        lottieCall.style.display = 'none';
-        lottieForm.style.display = 'none';
-
-        function showLottie(lottieToShow) {
-            lottieOff.style.display = 'none';
-            lottieCall.style.display = 'none';
-            lottieForm.style.display = 'none';
-            lottieToShow.style.display = 'block';
-        }
-
-        callButton.addEventListener('mouseenter', () => showLottie(lottieCall));
-        formButton.addEventListener('mouseenter', () => showLottie(lottieForm));
-
-        function handleLeave() {
-            setTimeout(() => {
-                if (!callButton.matches(':hover') && !formButton.matches(':hover')) {
-                    showLottie(lottieOff);
+                    if (index === buttons.length - 1) {
+                        initClickAnimation();
+                    }
                 }
-            }, 50);
+            });
         }
 
-        callButton.addEventListener('mouseleave', handleLeave);
-        formButton.addEventListener('mouseleave', handleLeave);
-    }
-
-    /////////////////////BUTTON MARQUE/////////////////////
-    function handleButtonMarqueHover() {
-        const buttonMarqueBlocks = document.querySelectorAll('.contact__button');
-
-        buttonMarqueBlocks.forEach(function (block) {
-            block.addEventListener('mouseenter', function () {
-                this.classList.add('active');
-                this.querySelector('.button-marque-arrow').classList.add('active');
-            });
-
-            block.addEventListener('mouseleave', function () {
-                this.classList.remove('active');
-                this.querySelector('.button-marque-arrow').classList.remove('active');
-            });
+        const shuffledButtons = [...buttons].sort(() => Math.random() - 0.5);
+        shuffledButtons.forEach((button, index) => {
+            showButtonAndApplyColor(button, index);
         });
+
+        let clickCount = 0;
+        const welcomeText = document.querySelector('.text__welcome');
+        const firstTryText = document.querySelector('.text__first__try');
+        const secondTryText = document.querySelector('.text__second__try');
+        const lastTryText = document.querySelector('.text__last__try');
+
+        gsap.set([firstTryText, secondTryText, lastTryText], { opacity: 0, y: 20 });
+
+        function updateTextVisibility() {
+            if (clickCount === 3) {
+                gsap.to(welcomeText, { opacity: 0, y: -20, duration: 0.5 });
+                gsap.to(firstTryText, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" });
+            } else if (clickCount === 6) {
+                gsap.to(firstTryText, { opacity: 0, y: -20, duration: 0.5 });
+                gsap.to(secondTryText, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" });
+            } else if (clickCount === 11) {
+                gsap.to(secondTryText, { opacity: 0, y: -20, duration: 0.5 });
+                gsap.to(lastTryText, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" });
+                setTimeout(() => {
+                    window.location.href = 'https://www.google.com';
+                }, 3000);
+            }
+        }
+
+        function initClickAnimation() {
+            buttons.forEach(button => {
+                const icon = button.querySelector('.icon__button__block.is-404');
+                let isIconMoved = false;
+
+                button.addEventListener('click', () => {
+                    const buttonRect = button.getBoundingClientRect();
+                    const iconRect = icon.getBoundingClientRect();
+                    
+                    if (!isIconMoved) {
+                        const moveDistance = buttonRect.height - iconRect.height - 18; 
+                        gsap.to(icon, {
+                            y: moveDistance,
+                            duration: 0.5,
+                            ease: "power2.out"
+                        });
+                    } else {
+                        gsap.to(icon, {
+                            y: 0,
+                            duration: 0.5,
+                            ease: "power2.inOut"
+                        });
+                    }
+                    
+                    isIconMoved = !isIconMoved;
+                    clickCount++;
+
+                    colors.forEach(color => button.classList.remove(color));
+
+                    updateTextVisibility();
+                });
+            });
+        }
     }
 
 
@@ -93,53 +128,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-    ////////////////////// BUTTON ANIMATIONS //////////////////////
-    function handleButtonAnimations() {
-        const buttons = document.querySelectorAll(".button__anchor__blog");
-        buttons.forEach(button => {
-            button.addEventListener('mouseenter', function () {
-                const hoverColors = {
-                    "is-chap-1": "#e0e055",
-                    "is-chap-2": "#8ddd8d",
-                    "is-chap-3": "#6066ee",
-                    "is-chap-4": "#faaafa",
-                    "is-chap-5": "#FFFFFF"
-                };
-                const hoverColor = hoverColors[this.classList[1]] || "#8ddd8d";
-
-                gsap.to(this.querySelector(".fake-arrow-width"), {
-                    width: "100%",
-                    duration: 0.6,
-                    ease: "power2.inOut",
-                });
-                gsap.to(this, {
-                    paddingLeft: "1.11rem",
-                    paddingRight: "3.4rem",
-                    backgroundColor: hoverColor,
-                    color: "#131313",
-                    duration: 0.6,
-                    ease: "power2.inOut",
-                });
-            });
-
-            button.addEventListener('mouseleave', function () {
-                gsap.to(this.querySelector(".fake-arrow-width"), {
-                    width: "0%",
-                    duration: 0.8,
-                    ease: "power2.inOut",
-                });
-                gsap.to(this, {
-                    paddingLeft: "3.4rem",
-                    paddingRight: "1.11rem",
-                    backgroundColor: "#2b2b2b",
-                    color: "#ffffff",
-                    duration: 0.8,
-                    ease: "power2.inOut",
-                });
-            });
-        });
-    }
-
+    
     ////////////////////// NAVBAR DROPDOWN //////////////////////
     function handleNavbarDropdown() {
         const $buttonDrop = $(".button-drop");

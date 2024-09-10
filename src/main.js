@@ -1,20 +1,72 @@
-
-
 // import Swiper from "swiper";
 // import gsap from "gsap";
 // import { ScrollTrigger } from "gsap/ScrollTrigger";
+// import SplitType from "split-type";
 // gsap.registerPlugin(ScrollTrigger);
 
-
-
 console.log('Hello 13g')
-
 console.log("hello main");
-// import SplitType from "split-type";
+import { initLoader } from "./loader.js";
 
+document.addEventListener('DOMContentLoaded', () => {
+  initLoader();
+});
 
+/////////////////PREFOOTER HOVER IMG FRANCIS ET BENJI////////////////////
+$(window).ready(function() {
+  const $prefooterButton = $('.button-icon.is-prefooter');
+  const $hungryImages = $('.francis-img.is-hungry, .benji-img.is-hungry');
+  const $happyImages = $('.francis-img.is-happy, .benji-img.is-happy');
+  const $francisLink = $('.francis-link');
+  const $benjiLink = $('.benji-link');
+  const $francisImages = $('.francis-img');
+  const $benjiImages = $('.benji-img');
 
+  // Afficher les images .is-hungry par défaut et cacher les images .is-happy
+  $hungryImages.css('opacity', 1);
+  $happyImages.css('opacity', 0);
 
+  $prefooterButton.hover(
+    function() {
+      // Au survol
+      $hungryImages.css('opacity', 0);
+      $happyImages.css('opacity', 1);
+    },
+    function() {
+      // À la sortie du survol
+      $happyImages.css('opacity', 0);
+      $hungryImages.css('opacity', 1);
+    }
+  );
+
+  $francisLink.hover(
+    function() {
+      // Au survol de Francis
+      $francisImages.css('opacity', 0);
+      $('.francis-img.is-face').css('opacity', 1);
+      $('.benji-img.is-target').css('opacity', 1);
+    },
+    function() {
+      // À la sortie du survol de Francis
+      $hungryImages.css('opacity', 1);
+      $('.francis-img.is-face, .benji-img.is-target').css('opacity', 0);
+    }
+  );
+
+  $benjiLink.hover(
+    function() {
+      $benjiImages.css('opacity', 0);
+      $('.benji-img.is-face').css('opacity', 1);
+      $('.francis-img.is-target').css('opacity', 1);
+    },
+    function() {
+      $hungryImages.css('opacity', 1);
+      $('.benji-img.is-face, .francis-img.is-target').css('opacity', 0);
+    }
+  );
+});
+
+/////////////////PREFOOTER IN BUILD responsive///////////////
 $(window).ready(function () {
     const prefooterImg = $(".prefooter__img__wrapper");
     const ctaPrefooter = $(".cta-prefooter__wrapper");
@@ -37,27 +89,6 @@ $(window).ready(function () {
   
     // Listen for window resize events
     $(window).on("resize", handleResize);
-  
-    // Animation avec ScrollTrigger
-    const images = $(".prefooter__img__item img");
-  
-    images.each(function (index) {
-      gsap.fromTo(
-        this,
-        { y: "100%" },
-        {
-          y: "0%",
-          duration: 1,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: ".prefooter",
-            start: "top 80%",
-            toggleActions: "play none none none",
-          },
-          delay: index * 0.4,
-        }
-      );
-    });
   });
 
 ///////////BENTO GRID ARTICLES///////////////
@@ -83,27 +114,27 @@ window.addEventListener('load', function () {
   });
 });
 ///////////PREFOOTER IN BUILD///////////////
-$(window).ready(function () {
-  const images = $(".prefooter__img__item img");
+// $(window).ready(function () {
+//   const images = $(".prefooter__img__item img");
 
-  images.each(function (index) {
-    gsap.fromTo(
-      this,
-      { y: "100%" },
-      {
-        y: "0%",
-        duration: 1,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: ".prefooter",
-          start: "top 80%",
-          toggleActions: "play none none none",
-        },
-        delay: index * 0.4,
-      },
-    );
-  });
-});
+//   images.each(function (index) {
+//     gsap.fromTo(
+//       this,
+//       { y: "100%" },
+//       {
+//         y: "0%",
+//         duration: 1,
+//         ease: "power3.out",
+//         scrollTrigger: {
+//           trigger: ".prefooter",
+//           start: "top 80%",
+//           toggleActions: "play none none none",
+//         },
+//         delay: index * 0.4,
+//       },
+//     );
+//   });
+// });
 
 /////////////////BUTTON ARROW PLAY VIDEO ZOOM-IN////////////////////
 $(window).ready(function () {
@@ -729,6 +760,7 @@ $(window).ready(function () {
 //     initScrollAnimation();
 //   });
 // });
+
 
 ///////////////HOVER AND CLICK BUTTON BLUR BG OFFRE////////////////////
 $(document).ready(function () {
