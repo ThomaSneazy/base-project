@@ -1,4 +1,4 @@
-import { initLoader } from "./loader.js";
+// import { initLoader } from "./loader.js";
 
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
     handleColorBlocks();
     handleClientAnchors();
     handleNavbarLogo(); 
-    initLoader();
+    // initLoader();
     scrollToElement();
   }
 

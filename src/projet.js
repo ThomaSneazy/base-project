@@ -1,13 +1,14 @@
-import { initLoader } from "./loader.js";
 
-// Fonction d'initialisation globale
+import { initLoader } from "./loader";
+
 function initProjetPage() {
-    initLoader();
     enhanceVimeoQuality();
     setupVimeoScriptRemoval();
     setupProjectAnimation();
     setupNavbarLogoColor();
     handleNavbarDropdown();
+    initLoader();
+
 }
 
 
@@ -15,7 +16,7 @@ function initProjetPage() {
 // Fonction pour améliorer la qualité Vimeo
 function enhanceVimeoQuality() {
     function updateVimeoIframes() {
-        document.querySelectorAll('iframe[src^="https://player.vimeo.com/video/"]').forEach(function(iframe) {
+        document.querySelectorAll('iframe[src^="https://player.vimeo.com/video/"]').forEach(function (iframe) {
             let src = new URL(iframe.src);
             src.searchParams.set('quality', '1080p');
             src.searchParams.set('dnt', '1');
@@ -124,21 +125,21 @@ function setupProjectAnimation() {
 
                 newProject.style.display = 'block';
                 if (isMobile) {
-                    gsap.fromTo(newProject, 
+                    gsap.fromTo(newProject,
                         { opacity: 0 },
-                        { 
-                            opacity: 1, 
-                            duration: 0.4, 
+                        {
+                            opacity: 1,
+                            duration: 0.4,
                             ease: "power2.in"
                         }
                     );
                 } else {
-                    gsap.fromTo(newProject, 
+                    gsap.fromTo(newProject,
                         { y: '100%', opacity: 0 },
-                        { 
-                            y: '0%', 
-                            opacity: 1, 
-                            duration: 0.8, 
+                        {
+                            y: '0%',
+                            opacity: 1,
+                            duration: 0.8,
                             ease: "power3.out"
                         }
                     );
@@ -213,93 +214,93 @@ function handleNavbarDropdown() {
     const $dropdownItems = $dropdownWrapper.find(".dropdown__item");
     let timeoutId;
     let isSmallScreen = window.innerWidth <= 991;
-  
+
     gsap.set($dropdownWrapper.get(0), {
-      opacity: 0,
-      visibility: "hidden",
-      backdropFilter: "blur(0px)",
+        opacity: 0,
+        visibility: "hidden",
+        backdropFilter: "blur(0px)",
     });
     gsap.set($dropdownItems.get(), { opacity: 0, y: 10 });
-  
-    function showDropdown() {
-      gsap.to($dropdownWrapper.get(0), {
-        duration: 0.3,
-        opacity: 1,
-        visibility: "visible",
-        backdropFilter: "blur(8px)",
-        ease: "power2.out",
-      });
-  
-      gsap.to($dropdownItems.get(), {
-        duration: 0.3,
-        opacity: 1,
-        y: 0,
-        stagger: 0.05,
-        ease: "power2.out",
-      });
-    }
-  
-    function hideDropdown() {
-      gsap.to($dropdownWrapper.get(0), {
-        duration: 0.3,
-        opacity: 0,
-        backdropFilter: "blur(0px)",
-        ease: "power2.in",
-        onComplete: () => {
-          gsap.set($dropdownWrapper.get(0), { visibility: "hidden" });
-        },
-      });
-  
-      gsap.to($dropdownItems.get(), {
-        duration: 0.2,
-        opacity: 0,
-        y: 10,
-        stagger: 0.03,
-        ease: "power2.in",
-      });
-    }
-  
-    function handleInteraction(event) {
-      if (isSmallScreen) {
-        if (event.type === 'click') {
-          if ($dropdownWrapper.css('visibility') === 'hidden') {
-            showDropdown();
-          } else {
-            hideDropdown();
-          }
-        }
-      } else {
-        if (event.type === 'mouseenter') {
-          clearTimeout(timeoutId);
-          showDropdown();
-        } else if (event.type === 'mouseleave') {
-          timeoutId = setTimeout(() => {
-            if (!$dropdownWrapper.is(":hover")) {
-              hideDropdown();
-            }
-          }, 100);
-        }
-      }
-    }
-  
-    $buttonDrop.on("mouseenter mouseleave click", handleInteraction);
-  
-    $dropdownWrapper.on("mouseleave", () => {
-      if (!isSmallScreen) {
-        timeoutId = setTimeout(() => {
-          if (!$buttonDrop.is(":hover")) {
-            hideDropdown();
-          }
-        }, 100);
-      }
-    });
-  
-    $(window).on('resize', () => {
-      isSmallScreen = window.innerWidth <= 991;
-    });
-  }
 
-  
+    function showDropdown() {
+        gsap.to($dropdownWrapper.get(0), {
+            duration: 0.3,
+            opacity: 1,
+            visibility: "visible",
+            backdropFilter: "blur(8px)",
+            ease: "power2.out",
+        });
+
+        gsap.to($dropdownItems.get(), {
+            duration: 0.3,
+            opacity: 1,
+            y: 0,
+            stagger: 0.05,
+            ease: "power2.out",
+        });
+    }
+
+    function hideDropdown() {
+        gsap.to($dropdownWrapper.get(0), {
+            duration: 0.3,
+            opacity: 0,
+            backdropFilter: "blur(0px)",
+            ease: "power2.in",
+            onComplete: () => {
+                gsap.set($dropdownWrapper.get(0), { visibility: "hidden" });
+            },
+        });
+
+        gsap.to($dropdownItems.get(), {
+            duration: 0.2,
+            opacity: 0,
+            y: 10,
+            stagger: 0.03,
+            ease: "power2.in",
+        });
+    }
+
+    function handleInteraction(event) {
+        if (isSmallScreen) {
+            if (event.type === 'click') {
+                if ($dropdownWrapper.css('visibility') === 'hidden') {
+                    showDropdown();
+                } else {
+                    hideDropdown();
+                }
+            }
+        } else {
+            if (event.type === 'mouseenter') {
+                clearTimeout(timeoutId);
+                showDropdown();
+            } else if (event.type === 'mouseleave') {
+                timeoutId = setTimeout(() => {
+                    if (!$dropdownWrapper.is(":hover")) {
+                        hideDropdown();
+                    }
+                }, 100);
+            }
+        }
+    }
+
+    $buttonDrop.on("mouseenter mouseleave click", handleInteraction);
+
+    $dropdownWrapper.on("mouseleave", () => {
+        if (!isSmallScreen) {
+            timeoutId = setTimeout(() => {
+                if (!$buttonDrop.is(":hover")) {
+                    hideDropdown();
+                }
+            }, 100);
+        }
+    });
+
+    $(window).on('resize', () => {
+        isSmallScreen = window.innerWidth <= 991;
+    });
+}
+
+
 
 // Appel de la fonction d'initialisation globale
 document.addEventListener('DOMContentLoaded', initProjetPage);

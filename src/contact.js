@@ -1,4 +1,4 @@
-import { initLoader } from "./loader.js";
+import { initLoader } from "./loader";
 
 
 document.addEventListener('DOMContentLoaded', function () {

@@ -1,7 +1,6 @@
 
 // console.log("hey campagne from cursor");
-
-import { initLoader } from "./loader.js";
+import { initLoader } from "./loader";
 window.addEventListener('load', initLoader);
 
 //////////////////////BOUTON ANCHOR CAMPAGNE///////////////////////

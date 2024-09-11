@@ -1,8 +1,7 @@
 
-
+import { initLoader } from "./loader";
 // console.log("offre-cursor");
-import { initLoader } from "./loader.js";
-window.addEventListener('load', initLoader);
+initLoader();
 
 document.addEventListener('DOMContentLoaded', () => {
   const buttons = document.querySelectorAll('[data-anchor]');

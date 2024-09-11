@@ -6,8 +6,9 @@
 
 console.log('Hello 13g')
 console.log("hello main");
-import { initLoader } from "./loader.js";
-window.addEventListener('load', initLoader);
+// import { initLoader } from "./loader.js";
+// window.addEventListener('load', initLoader);
+
 
 
 /////////////////PREFOOTER HOVER IMG FRANCIS ET BENJI////////////////////
