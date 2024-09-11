@@ -4,10 +4,9 @@
 // import SplitType from "split-type";
 // gsap.registerPlugin(ScrollTrigger);
 
-console.log('Hello 13g')
-console.log("hello main");
-// import { initLoader } from "./loader.js";
-// window.addEventListener('load', initLoader);
+
+import { initLoader } from "./loader.js";
+window.addEventListener('load', initLoader);
 
 
 

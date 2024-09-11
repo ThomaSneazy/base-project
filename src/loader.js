@@ -1,67 +1,66 @@
+export function initLoader() {
+    const loader = document.querySelector('.loader');
+    const loaderLogo = document.querySelector('.logo-loader-gsap');
+    const colors = ['#131313', '#faaafa', '#e0e055', '#8ddd8d', '#6066ee', '#FFFFFF'];
 
+    // Animation initiale du logo
+    setTimeout(() => {
+        gsap.fromTo(loaderLogo, 
+            { y: 100, opacity: 0 },
+            { 
+                y: 0, 
+                opacity: 1,
+                duration: 1.2,
+                ease: 'power3.out',
+                onComplete: () => {
+                    gsap.to(loaderLogo, {
+                        y: '-100%',
+                        duration: 1,
+                        ease: 'power3.out',
+                        onComplete: changeBackgroundColor
+                    });
+                }
+            }
+        );
+    }, 200);
 
-// export function initLoader() {
-//     const loader = document.querySelector('.loader');
-//     const loaderLogo = document.querySelector('.loader__logo');
-//     const colors = ['#faaafa', '#6066ee', '#8ddd8d', '#e0e055', '#FFFFFF', '#131313'];
-//     let colorIndex = 0;
+    function changeBackgroundColor(index = 0) {
+        if (index >= colors.length) {
+            hideLoader();
+            return;
+        }
 
-//     // Assurez-vous que le loader est visible
-//     loader.style.display = 'flex';
+        gsap.to(loader, {
+            backgroundColor: colors[index],
+            duration: 0.2, // Augmentation de la durée
+            ease: 'power1.inOut', // Ajout d'un effet de transition
+            onComplete: () => {
+                if (index < colors.length - 1) {
+                    setTimeout(() => changeBackgroundColor(index + 1), 300); // Augmentation du délai
+                } else {
+                    hideLoader();
+                }
+            }
+        });
+    }
 
-//     // Animation du logo
-//     gsap.fromTo(loaderLogo, 
-//       { y: '100%' },
-//       { 
-//         y: '0%', 
-//         duration: 1.2, // Augmenter la durée pour un effet plus lent
-//         ease: 'power3.inOut',
-//         onComplete: () => {
-//           setTimeout(changeBackgroundColor, 800); // Délai avant de changer la couleur
-//         }
-//       }
-//     );
-
-//     function changeBackgroundColor() {
-//       gsap.to(loader, {
-//         backgroundColor: colors[colorIndex],
-//         duration: 0.3, // Augmenter la durée pour un changement de couleur plus lent
-//         ease: '',
-//         onComplete: () => {
-//           colorIndex++;
-//           if (colorIndex < colors.length) {
-//             setTimeout(changeBackgroundColor, 300); // Délai entre les changements de couleur
-//           } else {
-//             setTimeout(hideLoader, 1000);
-//           }
-//         }
-//       });
-//     }
-//     function hideLoader() {
-//         let fadeCalled = false;
+    function hideLoader() {
+        gsap.to(loader, {
+            y: '-100%',
+            duration: 1.2,
+            ease: 'power3.out',
+            onComplete: () => {
+                loader.style.display = 'none';
+                myFade();
+            }
+        });
         
-//         gsap.to(loader, {
-//           y: '-100%',
-//           duration: 1.4,
-//           ease: 'power3.out',
-//           onUpdate: function() {
-//             // Déclencher myFade() lorsque l'animation est à 85% de sa progression
-//             if (this.progress() >= 0.45 && !fadeCalled) {
-//               fadeCalled = true;
-//               myFade();
-//             }
-//           },
-//           onComplete: () => {
-//             loader.style.display = 'none';
-//             // Si myFade n'a pas été appelé pour une raison quelconque, l'appeler ici
-//             if (!fadeCalled) {
-//               myFade();
-//             }
-//           }
-//         });
-//       }
-//     // Démarrer le loader sans sessionStorage
-//     changeBackgroundColor();
-// }
+    }
+}
 
-// initLoader();
+// Assurez-vous que initLoader() n'est appelé qu'une seule fois
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLoader);
+} else {
+    initLoader();
+}
