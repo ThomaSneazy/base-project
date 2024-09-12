@@ -8,8 +8,13 @@ function initProjetPage() {
     setupNavbarLogoColor();
     handleNavbarDropdown();
     initLoader();
-
+    stopLenis();
 }
+
+function stopLenis() {
+    lenis.destroy();
+  }
+
 
 
 
@@ -139,8 +144,8 @@ function setupProjectAnimation() {
                         {
                             y: '0%',
                             opacity: 1,
-                            duration: 0.8,
-                            ease: "power3.out"
+                            duration: 1.2,
+                            ease: "power2.out"
                         }
                     );
                 }

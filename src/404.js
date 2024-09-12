@@ -9,6 +9,19 @@ document.addEventListener('DOMContentLoaded', function () {
         handle404ButtonAnimation();
     }
     
+    function changeTabTitle(newTitle) {
+        document.title = newTitle;
+      }
+      
+      const originalTitle = document.title;
+      
+      document.addEventListener("visibilitychange", function() {
+        if (document.hidden) {
+          changeTabTitle("👋 Pssssht!");
+        } else {
+          changeTabTitle(originalTitle);
+        }
+      });
 
     ////////////////////// 404 BUTTON ANIMATION //////////////////////
     function handle404ButtonAnimation() {
@@ -61,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 gsap.to(secondTryText, { opacity: 0, y: -20, duration: 0.5 });
                 gsap.to(lastTryText, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" });
                 setTimeout(() => {
-                    window.location.href = 'https://www.google.com';
+                    window.location.href = 'https://www.13g.fr';
                 }, 3000);
             }
         }
