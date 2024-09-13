@@ -1,6 +1,4 @@
-
 import { initLoader } from "./loader";
-// console.log("offre-cursor");
 initLoader();
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -26,7 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
           const dataAnchor = button.getAttribute('data-anchor');
           activateAnchor(dataAnchor);
 
-          // Scroll vers la section correspondante si nécessaire
           const targetSection = document.querySelector(`[data-anchor="${dataAnchor}"]`);
           if (targetSection) {
               targetSection.scrollIntoView({ behavior: 'smooth' });
@@ -34,18 +31,16 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   });
 
-  // Gestion du scroll (optionnel, selon vos besoins)
   window.addEventListener('scroll', () => {
       // Vous pouvez ajouter ici une logique pour activer/désactiver les ancres en fonction du scroll
       // si c'est un comportement que vous souhaitez conserver
   });
 });
-console.log("test cdb");
+
 //////////////////////COMMENTAIRE ICI///////////////////////
 $(document).ready(function () {
   $(".button__contact__nav.is-anchor").hover(
     function () {
-      // Déterminer la couleur en fonction de la classe
       let color = "#8ddd8d"; // Couleur par défaut (vert)
       if ($(this).find(".icon-arrow-green-block").hasClass("is-digitale")) {
         color = "#faaafa"; // Rose pour .is-digitale
@@ -80,7 +75,6 @@ $(document).ready(function () {
       });
     },
     function () {
-      // Déterminer la couleur en fonction de la classe (même logique que ci-dessus)
       let color = "#8ddd8d";
       if ($(this).find(".icon-arrow-green-block").hasClass("is-digitale")) {
         color = "#faaafa";
@@ -294,8 +288,8 @@ document.addEventListener('DOMContentLoaded', function() {
     return;
   }
 
-  const maxMovement = 80; // Augmenté pour un mouvement encore plus prononcé
-  const smoothFactor = 0.05; // Garde la même valeur pour la fluidité
+  const maxMovement = 80; 
+  const smoothFactor = 0.05; 
 
   // Augmenter la plage des facteurs aléatoires
   const randomFactors = blocks.map(() => ({
@@ -354,51 +348,57 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-//////////////////////COMMENTAIRE ICI//////////////////////
+//////////////////////TEXTE PERSPECTIVE SCROLLTRIGGER//////////////////////
 document.addEventListener('DOMContentLoaded', () => {
-  const customH2Elements = document.querySelectorAll('.custom-h2__wrapper .custom-h2');
+  // Attendre que GSAP et ScrollTrigger soient chargés
+  gsap.registerPlugin(ScrollTrigger);
 
-  customH2Elements.forEach(element => {
-    const splitText = new SplitType(element, { types: 'words', tagName: 'span' });
+  // Attendre un court instant pour s'assurer que tout est bien initialisé
+  setTimeout(() => {
+    const customH2Elements = document.querySelectorAll('.custom-h2__wrapper .custom-h2');
 
-    if (splitText.words && splitText.words.length > 0) {
-      // Définir l'état initial : rotation -90deg et opacité 0
-      gsap.set(splitText.words, {
-        opacity: 0,
-        rotationX: -90,
-        transformPerspective: 1000,
-        transformOrigin: "50% 0%"
-      });
+    customH2Elements.forEach(element => {
+      const splitText = new SplitType(element, { types: 'words', tagName: 'span' });
 
-      // Créer l'animation GSAP qui se déclenche à chaque fois que l'élément entre dans le viewport
-      gsap.to(splitText.words, {
-        opacity: 1,
-        rotationX: 0,
-        duration: 1,
-        stagger: 0.05,
-        ease: 'power2.inOut',
-        scrollTrigger: {
-          trigger: element,
-          start: 'top 90%',
-          end: 'bottom 20%',
-          scrub: 0.5,
-          toggleActions: 'play none none reverse',
-          // markers: true,
-          onEnter: () => {
-            // Réinitialiser l'état initial avant de jouer l'animation à chaque entrée dans le viewport
-            gsap.set(splitText.words, {
-              opacity: 0,
-              rotationX: -90,
-              transformPerspective: 1000,
-              transformOrigin: "50% 0%"
-            });
+      if (splitText.words && splitText.words.length > 0) {
+        gsap.set(splitText.words, {
+          opacity: 0,
+          rotationX: -90,
+          transformPerspective: 1000,
+          transformOrigin: "50% 0%"
+        });
+
+        gsap.to(splitText.words, {
+          opacity: 1,
+          rotationX: 0,
+          duration: 1,
+          stagger: 0.05,
+          ease: 'power2.inOut',
+          scrollTrigger: {
+            trigger: element,
+            start: 'top 90%',
+            end: 'bottom 20%',
+            scrub: 0.5,
+            toggleActions: 'play none none reverse',
+            // markers: true,
+            onEnter: () => {
+              gsap.set(splitText.words, {
+                opacity: 0,
+                rotationX: -90,
+                transformPerspective: 1000,
+                transformOrigin: "50% 0%"
+              });
+            }
           }
-        }
-      });
-    } else {
-      console.error('SplitType n\'a pas réussi à diviser le texte en mots:', element.textContent);
-    }
-  });
+        });
+      } else {
+        console.error('SplitType n\'a pas réussi à diviser le texte en mots:', element.textContent);
+      }
+    });
+
+    // Forcer une mise à jour des ScrollTriggers
+    ScrollTrigger.refresh();
+  }, 100);
 });
 
 //////////////////////CARD 180 HOVER////////////////////////

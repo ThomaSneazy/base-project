@@ -2,7 +2,6 @@ import { initLoader } from "./loader";
 
 
 document.addEventListener('DOMContentLoaded', function () {
-    // console.log("hey contact");
     ////////////////////// MAIN FUNCTION //////////////////////
     function initializeContactFunctionalities() {
         handleButtonAnimations();

@@ -1,6 +1,5 @@
 
 document.addEventListener('DOMContentLoaded', function () {
-    // console.log("hey 404");
     
     ////////////////////// MAIN FUNCTION //////////////////////
     function initializeContactFunctionalities() {
@@ -63,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 gsap.to(lastTryText, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" });
                 setTimeout(() => {
                     window.location.href = 'https://www.13g.fr';
-                }, 3000);
+                }, 2000);
             }
         }
 
