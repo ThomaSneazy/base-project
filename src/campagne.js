@@ -199,6 +199,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 });
+
+
 ///////////////SWIPER HOME REVIEWS////////////////////
 $(document).ready(function () {
   var swiper;
@@ -287,7 +289,6 @@ $(document).ready(function () {
 
 
 //////////////////////NAVBAR DROPDOWN//////////////////////
-
 $(document).ready(function () {
     const $buttonDrop = $(".button-drop");
     const $dropdownWrapper = $(".dropdown__list__wrapper");

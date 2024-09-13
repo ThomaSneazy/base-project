@@ -44,18 +44,15 @@ $(window).ready(function() {
   const $francisImages = $('.francis-img');
   const $benjiImages = $('.benji-img');
 
-  // Afficher les images .is-hungry par défaut et cacher les images .is-happy
   $hungryImages.css('opacity', 1);
   $happyImages.css('opacity', 0);
 
   $prefooterButton.hover(
     function() {
-      // Au survol
       $hungryImages.css('opacity', 0);
       $happyImages.css('opacity', 1);
     },
     function() {
-      // À la sortie du survol
       $happyImages.css('opacity', 0);
       $hungryImages.css('opacity', 1);
     }
@@ -63,13 +60,11 @@ $(window).ready(function() {
 
   $francisLink.hover(
     function() {
-      // Au survol de Francis
       $francisImages.css('opacity', 0);
       $('.francis-img.is-face').css('opacity', 1);
       $('.benji-img.is-target').css('opacity', 1);
     },
     function() {
-      // À la sortie du survol de Francis
       $hungryImages.css('opacity', 1);
       $('.francis-img.is-face, .benji-img.is-target').css('opacity', 0);
     }
@@ -88,7 +83,7 @@ $(window).ready(function() {
   );
 });
 
-/////////////////PREFOOTER IN BUILD responsive///////////////
+/////////////////PREFOOTER IN BUILD RESPONSIVE PUSH IMAGE IN FLEX///////////////
 $(window).ready(function () {
     const prefooterImg = $(".prefooter__img__wrapper");
     const ctaPrefooter = $(".cta-prefooter__wrapper");
@@ -106,10 +101,8 @@ $(window).ready(function () {
       }
     }
   
-    // Initial check
     handleResize();
   
-    // Listen for window resize events
     $(window).on("resize", handleResize);
   });
 
@@ -763,7 +756,7 @@ $(window).ready(function () {
 // });
 
 
-///////////////HOVER AND CLICK BUTTON BLUR BG OFFRE////////////////////
+///////////////HOVER AND CLICK BUTTON HOMEPAGE DISCOVER BLUR BG OFFRES////////////////////
 $(document).ready(function () {
   $(".button__gradient__item").each(function () {
     const $buttonItem = $(this);
@@ -881,7 +874,10 @@ $(document).ready(function () {
     $(window).on("resize", updateButtonPosition);
   });
 });
-///////////TAGS EFFECT ON CLICK SERVICE BUTTON////////////////////
+
+
+
+///////////BUTTON INNOVATION HOMEPAGE STACK////////////////////
 $(document).ready(function () {
   const $arrowButtons = $(".services__button-logo.is-arrow");
   const $tagLists = $(".tag__list");
@@ -963,7 +959,9 @@ $(document).ready(function () {
     switchTags(serviceName);
   });
 });
-//////////////////////SERVICES BUTTONS ANIMATION//////////////////////
+
+
+//////////////////////SERVICES BUTTONS ANIMATION STACK//////////////////////
 $(document).ready(function () {
   const $buttonBlocks = $(".services__button-block");
 
@@ -1038,6 +1036,9 @@ $(document).ready(function () {
     initializeButtonBlock(this);
   });
 });
+
+
+
 //////////////////////GRADIENT EFFECT NOISE/BLUR EFFECT//////////////////////
 $(document).ready(function () {
   const $gradientBgs = $(".gradient-blur-bg");
@@ -1064,6 +1065,9 @@ $(document).ready(function () {
     });
   });
 });
+
+
+
 //////////////////////HOVER ON VIDEO HOMEPAGE//////////////////////
 $(document).ready(function () {
   const $videoWrappers = $(".home-video__wrapper");
@@ -1240,6 +1244,9 @@ $(document).ready(function () {
 
   $(window).on("resize", handleResize);
 });
+
+
+
 //////////////////////NAVBAR DROPDOWN//////////////////////
 $(document).ready(function () {
   const $buttonDrop = $(".button-drop");

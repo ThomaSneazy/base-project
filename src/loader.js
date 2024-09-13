@@ -11,7 +11,7 @@ export function initLoader() {
 
     setTimeout(() => {
         gsap.fromTo(loaderLogo, 
-            { y: 100, opacity: 0 },
+            { y: 100, opacity: 0 }, //VOIR ICI PASSER EN 30PX ??? MOVE Y
             { 
                 y: 0, 
                 opacity: 1,

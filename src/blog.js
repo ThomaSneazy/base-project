@@ -2,8 +2,7 @@ import { initLoader } from "./loader.js";
 
 
 document.addEventListener('DOMContentLoaded', function() {
-  // console.log("hey blog and client back");
-  ////////////////////// MAIN FUNCTION //////////////////////
+  ////////////////////// INIT ALL FUNCTIONS ON LOAD //////////////////////
   function initializeBlogFunctionalities() {
     initLoader();
     styleDarkBackgroundArticles();
@@ -17,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
 
-  //////////////////// ANCHOR TO H2 BLOG TEMPLATE//////////////////////
+//////////////////// ANCHOR TO H2 BLOG TEMPLATE ACTIVE//////////////////////
 function scrollToElement(element, duration) {
     const start = window.pageYOffset;
     const target = element.getBoundingClientRect().top + start - 50;
@@ -165,7 +164,7 @@ function handleNavbarLogo() {
 
 
 
-  ////////////////////// CLIENT ANCHORS //////////////////////
+  //////////////////////  PAGE TEMPLATE CLIENT ANCHORS //////////////////////
   function handleClientAnchors() {
     const anchorItems = document.querySelectorAll('.anchor__client__item');
   
@@ -189,7 +188,7 @@ function handleNavbarLogo() {
   
   
 
-  ////////////////////// COLOR BLOCKS //////////////////////
+  ////////////////////// PAGE CLIENT COLOR BACKGROUND GRADIENT BLOCKS //////////////////////
   function handleColorBlocks() {
     const colorBlocks = document.querySelectorAll('.logotype__block__color');
   
@@ -280,7 +279,7 @@ function handleNavbarLogo() {
   
   
 
-  ////////////////////// DARK BACKGROUND STYLING //////////////////////
+  ////////////////////// BLOG LIST ITEM BLACK BACKGROUND STYLING //////////////////////
   function styleDarkBackgroundArticles() {
     const bgArticles = document.querySelectorAll('.bg-article');
     bgArticles.forEach(bgArticle => {
@@ -313,7 +312,7 @@ function handleNavbarLogo() {
     });
   }
 
-  ////////////////////// HEADINGS AND BUTTONS //////////////////////
+  ////////////////////// INNER SHADOW BUTTON PARENT OF H2 BLOG TEMPLATE //////////////////////
   function handleHeadingsAndButtons() {
     const richTextBlog = document.querySelector('.rich-text-blog');
     if (!richTextBlog) return;
@@ -351,7 +350,7 @@ function handleNavbarLogo() {
     }
   }
 
-  ////////////////////// BUTTON ANIMATIONS //////////////////////
+  ////////////////////// BUTTON CHAPTERS ANIMATIONS HOVER //////////////////////
   function handleButtonAnimations() {
     const buttons = document.querySelectorAll(".button__anchor__blog");
     buttons.forEach(button => {

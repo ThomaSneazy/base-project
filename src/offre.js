@@ -1,6 +1,7 @@
 import { initLoader } from "./loader";
 initLoader();
 
+
 document.addEventListener('DOMContentLoaded', () => {
   const buttons = document.querySelectorAll('[data-anchor]');
   const anchorActives = document.querySelectorAll('.anchor-active');
@@ -37,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-//////////////////////COMMENTAIRE ICI///////////////////////
+//////////////////////BUTTON TO SECTION CAMPAGNE PAGE///////////////////////
 $(document).ready(function () {
   $(".button__contact__nav.is-anchor").hover(
     function () {
@@ -113,7 +114,7 @@ $(document).ready(function () {
 
 
 
-//////////////////////COMMENTAIRE ICI//////////////////////
+//////////////////////ANIMATION PROJECT ITEM H1 ??//////////////////////
 document.addEventListener('DOMContentLoaded', function() {
   const projectItems = gsap.utils.toArray('.offre-project__item');
   let currentActiveItem = null;
@@ -278,7 +279,9 @@ $(document).ready(function () {
 //     delay: index * 0.1 // Léger décalage entre chaque bloc
 //   });
 // });
-//////////////////////COMMENTAIRE ICI//////////////////////
+
+
+//////////////////////FADE IN TAG BLOCK ON CUSOTM H2//////////////////////
 document.addEventListener('DOMContentLoaded', function() {
   const section = document.querySelector('.section.is-custom-h2');
   const blocks = Array.from(document.querySelectorAll('.tag__item__block'));
@@ -291,7 +294,6 @@ document.addEventListener('DOMContentLoaded', function() {
   const maxMovement = 80; 
   const smoothFactor = 0.05; 
 
-  // Augmenter la plage des facteurs aléatoires
   const randomFactors = blocks.map(() => ({
     x: (Math.random() - 0.5) * 5, // Entre -1.5 et 1.5
     y: (Math.random() - 0.5) * 5, // Entre -1.5 et 1.5
@@ -332,15 +334,15 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // Augmenter l'amplitude du mouvement aléatoire
+  // Amplitude movements mouse enter
   function addRandomMovement() {
     blocks.forEach((block, index) => {
-      const randomX = (Math.random() - 0.5) * 10; // Augmenté à 20
-      const randomY = (Math.random() - 0.5) * 10; // Augmenté à 20
+      const randomX = (Math.random() - 0.5) * 10; 
+      const randomY = (Math.random() - 0.5) * 10; 
       targetPositions[index].x += randomX;
       targetPositions[index].y += randomY;
     });
-    setTimeout(addRandomMovement, 1500); // Réduit à 1.5 secondes pour plus de dynamisme
+    setTimeout(addRandomMovement, 1500); 
   }
 
   updateBlockPositions();
@@ -350,10 +352,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 //////////////////////TEXTE PERSPECTIVE SCROLLTRIGGER//////////////////////
 document.addEventListener('DOMContentLoaded', () => {
-  // Attendre que GSAP et ScrollTrigger soient chargés
   gsap.registerPlugin(ScrollTrigger);
 
-  // Attendre un court instant pour s'assurer que tout est bien initialisé
   setTimeout(() => {
     const customH2Elements = document.querySelectorAll('.custom-h2__wrapper .custom-h2');
 
@@ -401,7 +401,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 100);
 });
 
-//////////////////////CARD 180 HOVER////////////////////////
+//////////////////////CARD OFFRE BRAND PAGE HOVER BG WHITE////////////////////////
 const cardItems = document.querySelectorAll('.card__180__item');
 
 cardItems.forEach(item => {
@@ -412,7 +412,6 @@ cardItems.forEach(item => {
   const backParagraph = backElement.querySelector('p');
 
   if (backElement && textWrapper && divider && backImage && backParagraph) {
-    // Animation initiale (état de départ)
     gsap.set(backElement, {
       height: 0,
       borderTopLeftRadius: '15rem',
@@ -422,14 +421,12 @@ cardItems.forEach(item => {
     });
     gsap.set(divider, { width: 0 });
     
-    // Cacher l'image et le paragraphe initialement
     gsap.set([backImage, backParagraph], {
       display: 'none',
       opacity: 0,
       y: 30
     });
 
-    // Création de la timeline pour l'animation
     const tl = gsap.timeline({ paused: true });
 
     tl.to(backElement, {
@@ -453,13 +450,11 @@ cardItems.forEach(item => {
     }, "-=0.4")
     .add(() => textWrapper.classList.add('active'), "-=0.6");
 
-    // Ajout des écouteurs d'événements pour le survol
     item.addEventListener('mouseenter', () => {
       tl.play();
     });
     item.addEventListener('mouseleave', () => {
       tl.reverse();
-      // Retirer la classe 'active' à la fin de l'animation inverse
       tl.eventCallback('onReverseComplete', () => {
         textWrapper.classList.remove('active');
         gsap.set([backImage, backParagraph], { display: 'none' });
@@ -568,7 +563,7 @@ $(document).ready(function() {
     closeAllPopups();
   });
 });
-//////////////////Last lottie in grid/////////////////////
+//////////////////LAST LOTTIE = BUTTON/////////////////////
 $(document).ready(function() {
   const $arrow = $('.offre-lottie__block.is_last .icon-arrow.is-lottie');
   let moveAnimation;
@@ -657,8 +652,9 @@ $(document).ready(function() {
       });
   }
 });
-//////////////////////NAVBAR DROPDOWN//////////////////////
 
+
+//////////////////////NAVBAR DROPDOWN//////////////////////
 $(document).ready(function () {
     const $buttonDrop = $(".button-drop");
     const $dropdownWrapper = $(".dropdown__list__wrapper");

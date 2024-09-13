@@ -2,6 +2,7 @@
 import { initLoader } from "./loader";
 
 function initProjetPage() {
+    handleNavbarLogo();
     enhanceVimeoQuality();
     setupVimeoScriptRemoval();
     setupProjectAnimation();
@@ -18,7 +19,7 @@ function stopLenis() {
 
 
 
-// Fonction pour améliorer la qualité Vimeo
+///////////////QUALITY VIDEO VIMEO//////////////////
 function enhanceVimeoQuality() {
     function updateVimeoIframes() {
         document.querySelectorAll('iframe[src^="https://player.vimeo.com/video/"]').forEach(function (iframe) {
@@ -49,7 +50,7 @@ function enhanceVimeoQuality() {
     });
 }
 
-// Fonction pour supprimer les scripts Vimeo
+///////////////DELETE SCRIPT ON VIEMO COPY/PASTE BUT DOESNT WORK???//////////////////
 function setupVimeoScriptRemoval() {
     function removeVimeoScripts() {
         document.querySelectorAll('script[src^="https://player.vimeo.com/api/player.js"]').forEach(script => script.remove());
@@ -76,7 +77,7 @@ function setupVimeoScriptRemoval() {
     });
 }
 
-// Fonction pour l'animation des projets
+///////////////ANIMATION OPACITY AND MOVE ON ACTIVE PROJECT BUT GLITCH ON NEW PROJECT CAUSE OF VIDEO??//////////////////
 function setupProjectAnimation() {
     const desktopButtons = document.querySelectorAll('.left [data-project-name]');
     const mobileButtons = document.querySelectorAll('.mobile-buttons [data-project-name]');
@@ -196,21 +197,47 @@ function setupProjectAnimation() {
     });
 }
 
-// Fonction pour mettre à jour la couleur du logo de la navbar
-function setupNavbarLogoColor() {
-    function updateNavbarLogo() {
-        const navbarLogo = document.querySelector('.navbar__logo');
-        if (navbarLogo) {
-            navbarLogo.style.color = window.location.href.includes('projets') ? '#131313' : '';
-        }
-    }
+// // Fonction pour mettre à jour la couleur du logo de la navbar
+// function setupNavbarLogoColor() {
+//     function updateNavbarLogo() {
+//         const navbarLogo = document.querySelector('.navbar__logo');
+//         if (navbarLogo) {
+//             navbarLogo.style.color = window.location.href.includes('projets') ? '#131313' : '';
+//         }
+//     }
 
+//     updateNavbarLogo();
+//     window.addEventListener('popstate', updateNavbarLogo);
+//     document.querySelectorAll('a').forEach(link => {
+//         link.addEventListener('click', () => setTimeout(updateNavbarLogo, 0));
+//     });
+// }
+
+//////////////////////LOGO NAVBAR BLACK///////////////////////
+function handleNavbarLogo() {
+    function updateNavbarLogo() {
+      const navbarLogo = document.querySelector('.navbar__logo');
+      if (navbarLogo) {
+        if (window.location.href.includes('projets')) {
+          navbarLogo.style.color = '#131313';
+        } else {
+          navbarLogo.style.color = ''; 
+        }
+      }
+    }
+  
     updateNavbarLogo();
+  
     window.addEventListener('popstate', updateNavbarLogo);
+  
     document.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => setTimeout(updateNavbarLogo, 0));
+      link.addEventListener('click', (e) => {
+        setTimeout(updateNavbarLogo, 0);
+      });
     });
-}
+  }
+
+
 
 ////////////////////// NAVBAR DROPDOWN //////////////////////
 function handleNavbarDropdown() {
@@ -307,5 +334,4 @@ function handleNavbarDropdown() {
 
 
 
-// Appel de la fonction d'initialisation globale
 document.addEventListener('DOMContentLoaded', initProjetPage);
