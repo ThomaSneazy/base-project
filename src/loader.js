@@ -1,7 +1,5 @@
 export function initLoader() {
-    // Vérifier si le loader a déjà été joué
     if (localStorage.getItem('loaderPlayed') === 'true') {
-        // Si oui, cacher le loader immédiatement
         document.querySelector('.loader').style.display = 'none';
         myFade();
         return;
@@ -11,7 +9,6 @@ export function initLoader() {
     const loaderLogo = document.querySelector('.logo-loader-gsap');
     const colors = ['#131313', '#faaafa', '#e0e055', '#8ddd8d', '#6066ee', '#FFFFFF'];
 
-    // Animation initiale du logo
     setTimeout(() => {
         gsap.fromTo(loaderLogo, 
             { y: 100, opacity: 0 },
@@ -66,7 +63,6 @@ export function initLoader() {
     }
 }
 
-// Nouvelle fonction pour l'animation de transition
 export function animatePageTransition() {
     const pageWrapper = document.querySelector('.page-wrapper');
     
@@ -78,7 +74,6 @@ export function animatePageTransition() {
     });
 }
 
-// Ajout d'un écouteur d'événements pour les liens de navigation
 document.addEventListener('DOMContentLoaded', () => {
     document.body.addEventListener('click', (e) => {
         const link = e.target.closest('a');

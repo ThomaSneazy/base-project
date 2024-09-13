@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // console.log("hey blog and client back");
   ////////////////////// MAIN FUNCTION //////////////////////
   function initializeBlogFunctionalities() {
+    initLoader();
     styleDarkBackgroundArticles();
     handleHeadingsAndButtons();
     handleButtonAnimations();
@@ -12,7 +13,6 @@ document.addEventListener('DOMContentLoaded', function() {
     handleColorBlocks();
     handleClientAnchors();
     handleNavbarLogo(); 
-    initLoader();
     scrollToElement();
   }
 
