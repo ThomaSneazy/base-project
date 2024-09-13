@@ -1,4 +1,12 @@
 export function initLoader() {
+    // Vérifier si le loader a déjà été joué
+    if (localStorage.getItem('loaderPlayed') === 'true') {
+        // Si oui, cacher le loader immédiatement
+        document.querySelector('.loader').style.display = 'none';
+        myFade();
+        return;
+    }
+
     const loader = document.querySelector('.loader');
     const loaderLogo = document.querySelector('.logo-loader-gsap');
     const colors = ['#131313', '#faaafa', '#e0e055', '#8ddd8d', '#6066ee', '#FFFFFF'];
@@ -32,11 +40,11 @@ export function initLoader() {
 
         gsap.to(loader, {
             backgroundColor: colors[index],
-            duration: 0.2, // Augmentation de la durée
-            ease: 'power1.inOut', // Ajout d'un effet de transition
+            duration: 0.2, 
+            ease: 'power1.inOut', 
             onComplete: () => {
                 if (index < colors.length - 1) {
-                    setTimeout(() => changeBackgroundColor(index + 1), 300); // Augmentation du délai
+                    setTimeout(() => changeBackgroundColor(index + 1), 300); 
                 } else {
                     hideLoader();
                 }
@@ -52,15 +60,57 @@ export function initLoader() {
             onComplete: () => {
                 loader.style.display = 'none';
                 myFade();
+                localStorage.setItem('loaderPlayed', 'true');
             }
         });
-        
     }
 }
 
-// Assurez-vous que initLoader() n'est appelé qu'une seule fois
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initLoader);
-} else {
-    initLoader();
+// Nouvelle fonction pour l'animation de transition
+export function animatePageTransition() {
+    const pageWrapper = document.querySelector('.page-wrapper');
+    
+    return gsap.to(pageWrapper, {
+        opacity: 0,
+        y: 50,
+        duration: 1,
+        ease: 'power2.inOut'
+    });
 }
+
+// Ajout d'un écouteur d'événements pour les liens de navigation
+document.addEventListener('DOMContentLoaded', () => {
+    document.body.addEventListener('click', (e) => {
+        const link = e.target.closest('a');
+        if (link && link.getAttribute('href').startsWith('/')) {
+            e.preventDefault();
+            const href = link.getAttribute('href');
+            
+            animatePageTransition().then(() => {
+                window.location.href = href;
+            });
+        }
+    });
+});
+
+function shouldPlayLoader() {
+    const lastVisit = localStorage.getItem('lastVisit');
+    const currentTime = new Date().getTime();
+    const oneHour = 60 * 60 * 1000; 
+
+    if (!lastVisit || (currentTime - parseInt(lastVisit)) > oneHour) {
+        localStorage.setItem('lastVisit', currentTime.toString());
+        return true;
+    }
+    return false;
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        if (shouldPlayLoader()) initLoader();
+    });
+} else {
+    if (shouldPlayLoader()) initLoader();
+}
+
+

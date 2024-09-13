@@ -140,7 +140,7 @@ function setupProjectAnimation() {
                     );
                 } else {
                     gsap.fromTo(newProject,
-                        { y: '100%', opacity: 0 },
+                        { y: '15%', opacity: 0 },
                         {
                             y: '0%',
                             opacity: 1,

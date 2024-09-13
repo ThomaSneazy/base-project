@@ -370,7 +370,7 @@ document.addEventListener('DOMContentLoaded', () => {
         transformOrigin: "50% 0%"
       });
 
-      // Créer l'animation GSAP
+      // Créer l'animation GSAP qui se déclenche à chaque fois que l'élément entre dans le viewport
       gsap.to(splitText.words, {
         opacity: 1,
         rotationX: 0,
@@ -384,6 +384,15 @@ document.addEventListener('DOMContentLoaded', () => {
           scrub: 0.5,
           toggleActions: 'play none none reverse',
           // markers: true,
+          onEnter: () => {
+            // Réinitialiser l'état initial avant de jouer l'animation à chaque entrée dans le viewport
+            gsap.set(splitText.words, {
+              opacity: 0,
+              rotationX: -90,
+              transformPerspective: 1000,
+              transformOrigin: "50% 0%"
+            });
+          }
         }
       });
     } else {

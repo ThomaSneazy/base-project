@@ -9,19 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
         handle404ButtonAnimation();
     }
     
-    function changeTabTitle(newTitle) {
-        document.title = newTitle;
-      }
-      
-      const originalTitle = document.title;
-      
-      document.addEventListener("visibilitychange", function() {
-        if (document.hidden) {
-          changeTabTitle("👋 Pssssht!");
-        } else {
-          changeTabTitle(originalTitle);
-        }
-      });
+
 
     ////////////////////// 404 BUTTON ANIMATION //////////////////////
     function handle404ButtonAnimation() {

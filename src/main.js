@@ -1,14 +1,38 @@
 // import Swiper from "swiper";
 // import gsap from "gsap";
 // import { ScrollTrigger } from "gsap/ScrollTrigger";
-// import SplitType from "split-type";
-// gsap.registerPlugin(ScrollTrigger);
-
-
 import { initLoader } from "./loader.js";
+
+// import SplitType from "split-type";
+gsap.registerPlugin(ScrollTrigger);
+
+
 window.addEventListener('load', initLoader);
 
 
+
+///////////BENTO GRID ARTICLES///////////////
+window.addEventListener('load', function () {
+  const items = document.querySelectorAll('.adobe__item, .novum__item, .awwward__item, .behance__item');
+  const shuffledItems = gsap.utils.shuffle([...items]);
+
+  gsap.from(shuffledItems, {
+    scrollTrigger: {
+      trigger: ".home-articles__wrapper",
+      start: "top 70%",
+      end: "bottom 20%",
+      toggleActions: "play none none none",
+    },
+    scale: 0.5,
+    opacity: 0,
+    duration: 1,
+    ease: "power3.inOut",
+    stagger: {
+      amount: 0.6,
+      from: "random",
+    },
+  });
+});
 
 /////////////////PREFOOTER HOVER IMG FRANCIS ET BENJI////////////////////
 $(window).ready(function() {
@@ -89,28 +113,7 @@ $(window).ready(function () {
     $(window).on("resize", handleResize);
   });
 
-///////////BENTO GRID ARTICLES///////////////
-window.addEventListener('load', function () {
-  const items = document.querySelectorAll('.adobe__item, .novum__item, .awwward__item, .behance__item');
-  const shuffledItems = gsap.utils.shuffle([...items]);
 
-  gsap.from(shuffledItems, {
-    scrollTrigger: {
-      trigger: ".home-articles__wrapper",
-      start: "top 70%",
-      end: "bottom 20%",
-      toggleActions: "play none none none",
-    },
-    scale: 0.5,
-    opacity: 0,
-    duration: 1,
-    ease: "power3.inOut",
-    stagger: {
-      amount: 0.6,
-      from: "random",
-    },
-  });
-});
 ///////////PREFOOTER IN BUILD///////////////
 // $(window).ready(function () {
 //   const images = $(".prefooter__img__item img");
