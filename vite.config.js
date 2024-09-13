@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 import glsl from 'vite-plugin-glsl';
+import { resolve } from 'path'
 
-// vite.config.js
 export default defineConfig({
   plugins: [glsl()],
   server: {
@@ -16,10 +16,20 @@ export default defineConfig({
     minify: true,
     manifest: true,
     rollupOptions: {
-      input: './src/main.js',
+      input: {
+        main: resolve(__dirname, 'index.html'),
+        '404': resolve(__dirname, 'src/404.js'),
+        blog: resolve(__dirname, 'src/blog.js'),
+        campagne: resolve(__dirname, 'src/campagne.js'),
+        contact: resolve(__dirname, 'src/contact.js'),
+        loader: resolve(__dirname, 'src/loader.js'),
+        offre: resolve(__dirname, 'src/offre.js'),
+        projet: resolve(__dirname, 'src/projet.js'),
+        transition: resolve(__dirname, 'src/transition.js')
+      },
       output: {
         format: 'umd',
-        entryFileNames: 'main.js',
+        entryFileNames: '[name].js',
         esModule: false,
         compact: true,
         globals: {
