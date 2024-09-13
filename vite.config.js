@@ -28,13 +28,9 @@ export default defineConfig({
         transition: resolve(__dirname, 'src/transition.js')
       },
       output: {
-        format: 'umd',
         entryFileNames: '[name].js',
-        esModule: false,
-        compact: true,
-        globals: {
-          jquery: '$',
-        },
+        chunkFileNames: '[name]-[hash].js',
+        assetFileNames: '[name]-[hash][extname]',
       },
       external: ['jquery'],
     },
