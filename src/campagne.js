@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-//////////////////////COMMENTAIRE ICI//////////////////////
+//////////////////////PROJECT LIST PAGE BRANDING SHOW IMG ON SCROLL//////////////////////
 document.addEventListener('DOMContentLoaded', function() {
   const projectItems = gsap.utils.toArray('.offre-project__item');
   let currentActiveItem = null;
