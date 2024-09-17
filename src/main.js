@@ -9,6 +9,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 window.addEventListener('load', initLoader);
 
+console.log('main.js');
+
 
 
 ///////////BENTO GRID ARTICLES///////////////
@@ -1086,7 +1088,7 @@ $(document).ready(function () {
 
       let activeVideoIndex = Math.floor(Math.random() * $videoBe.length);
 
-      gsap.set($itemWrappers, { height: "4.72rem", width: "20rem" });
+      gsap.set($itemWrappers, { height: "4.72rem", width: "20rem", borderRadius: "2.78rem" });
       gsap.set($button, { opacity: 0 });
       gsap.set($title, { opacity: 1 });
       gsap.set($videoBe, { opacity: 0 });
@@ -1098,6 +1100,7 @@ $(document).ready(function () {
       tl.to($itemWrappers, {
         height: "32rem",
         width: "25rem",
+        borderRadius: "2rem",
         duration: 0.8,
         ease: "power3.inOut",
       })
