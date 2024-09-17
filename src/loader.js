@@ -86,6 +86,14 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     });
+
+    // Nouveau gestionnaire pour le retour en arrière
+    window.addEventListener('popstate', (event) => {
+        animatePageTransition().then(() => {
+            // Recharger la page après l'animation
+            window.location.reload();
+        });
+    });
 });
 
 function shouldPlayLoader() {
