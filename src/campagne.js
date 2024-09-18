@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     button.addEventListener('mouseleave', function() {
-      let color = "#8ddd8d";
+      let color = "#131313";
       const iconArrow = this.querySelector(".icon-arrow-green-block");
       if (iconArrow.classList.contains("is-digitale")) {
         color = "#faaafa";
