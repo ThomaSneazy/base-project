@@ -3,7 +3,7 @@ import { initLoader } from "./loader";
 
 function initProjetPage() {
     initLoader();
-    handleNavbarLogo();
+    // handleNavbarLogo();
     enhanceVimeoQuality();
     setupVimeoScriptRemoval();
     setupProjectAnimation();
@@ -197,23 +197,23 @@ function setupProjectAnimation() {
     });
 }
 
-// // Fonction pour mettre à jour la couleur du logo de la navbar
-// function setupNavbarLogoColor() {
-//     function updateNavbarLogo() {
-//         const navbarLogo = document.querySelector('.navbar__logo');
-//         if (navbarLogo) {
-//             navbarLogo.style.color = window.location.href.includes('projets') ? '#131313' : '';
-//         }
-//     }
+// Fonction pour mettre à jour la couleur du logo de la navbar
+function setupNavbarLogoColor() {
+    function updateNavbarLogo() {
+        const navbarLogo = document.querySelector('.navbar__logo');
+        if (navbarLogo) {
+            navbarLogo.style.color = window.location.href.includes('projets') ? '#131313' : '';
+        }
+    }
 
-//     updateNavbarLogo();
-//     window.addEventListener('popstate', updateNavbarLogo);
-//     document.querySelectorAll('a').forEach(link => {
-//         link.addEventListener('click', () => setTimeout(updateNavbarLogo, 0));
-//     });
-// }
+    updateNavbarLogo();
+    window.addEventListener('popstate', updateNavbarLogo);
+    document.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => setTimeout(updateNavbarLogo, 0));
+    });
+}
 
-// //////////////////////LOGO NAVBAR BLACK///////////////////////
+//////////////////////LOGO NAVBAR BLACK///////////////////////
 // function handleNavbarLogo() {
 //     function updateNavbarLogo() {
 //       const navbarLogo = document.querySelector('.navbar__logo');
