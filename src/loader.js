@@ -63,8 +63,14 @@ export function initLoader() {
     }
 }
 
-export function animatePageTransition() {
+export function animatePageTransition(isBackNavigation = false) {
     const pageWrapper = document.querySelector('.page-wrapper');
+    
+    if (isBackNavigation) {
+        // Réinitialiser l'opacité et la position pour le retour en arrière
+        gsap.set(pageWrapper, { opacity: 1, y: 0 });
+        return Promise.resolve();
+    }
     
     return gsap.to(pageWrapper, {
         opacity: 0,
@@ -87,11 +93,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Nouveau gestionnaire pour le retour en arrière
+    // Gestionnaire modifié pour le retour en arrière
     window.addEventListener('popstate', (event) => {
-        animatePageTransition().then(() => {
-            // Recharger la page après l'animation
-            window.location.reload();
+        animatePageTransition(true).then(() => {
+            // Pas besoin de recharger la page, l'animation est gérée différemment
         });
     });
 });
@@ -115,5 +120,14 @@ if (document.readyState === 'loading') {
 } else {
     if (shouldPlayLoader()) initLoader();
 }
+
+// Ajoutez ceci à la fin du fichier
+window.onpageshow = function(event) {
+    if (event.persisted) {
+        // Réinitialiser l'opacité et la position du .page-wrapper
+        const pageWrapper = document.querySelector('.page-wrapper');
+        gsap.set(pageWrapper, { opacity: 1, y: 0 });
+    }
+};
 
 
