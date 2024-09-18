@@ -3,8 +3,8 @@ document.addEventListener('DOMContentLoaded', function () {
     
     ////////////////////// INIT MAIN FUNCTION ON LOAD //////////////////////
     function initializeContactFunctionalities() {
-        handleNavbarDropdown();
-        handleNavbarLogo();
+        // handleNavbarDropdown();
+        // handleNavbarLogo();
         handle404ButtonAnimation();
     }
     
