@@ -335,6 +335,15 @@ function handleNavbarLogo() {
       const toggleChap = document.createElement('div');
       toggleChap.className = 'toggle__chap';
       
+      // Ajout du SVG dans le toggle__chap
+      toggleChap.innerHTML = `
+        <div class="icon-arrow is-small">
+          <svg width="100%" height="100%" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12.175 9H0V7H12.175L6.575 1.4L8 0L16 8L8 16L6.575 14.6L12.175 9Z" fill="currentColor"/>
+          </svg>
+        </div>
+      `;
+      
       const button = document.querySelector(`.button__anchor__blog.is-chap-${index + 1}`);
       if (button) {
         const iconButtonBlock = button.querySelector(`.icon__button__block.is-chap-${index + 1}`);
@@ -355,10 +364,7 @@ function handleNavbarLogo() {
       smallButtonChap.appendChild(toggleChap);
       headingContainer.appendChild(smallButtonChap);
       
-      // Insérer le headingContainer avant le h2
       h2.parentNode.insertBefore(headingContainer, h2);
-      
-      // Déplacer le h2 dans le headingContainer
       headingContainer.appendChild(h2);
     });
 
