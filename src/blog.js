@@ -354,8 +354,12 @@ function handleNavbarLogo() {
       
       smallButtonChap.appendChild(toggleChap);
       headingContainer.appendChild(smallButtonChap);
-      headingContainer.appendChild(h2);
+      
+      // Insérer le headingContainer avant le h2
       h2.parentNode.insertBefore(headingContainer, h2);
+      
+      // Déplacer le h2 dans le headingContainer
+      headingContainer.appendChild(h2);
     });
 
     for (let i = h2Elements.length + 1; i <= 5; i++) {
