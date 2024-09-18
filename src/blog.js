@@ -326,20 +326,9 @@ function handleNavbarLogo() {
       const headingContainer = document.createElement('div');
       headingContainer.className = 'heading__blog__container';
       headingContainer.id = `heading-${index + 1}`;
-      headingContainer.style.display = 'flex';
-      headingContainer.style.gap = '2rem';
-      
-      const smallButtonChap = document.createElement('div');
-      smallButtonChap.className = 'small__button_chap';
-      
-      const toggleChap = document.createElement('div');
-      toggleChap.className = 'toggle__chap';
-      
-      smallButtonChap.appendChild(toggleChap);
-      headingContainer.appendChild(smallButtonChap);
-      headingContainer.appendChild(h2);
       
       h2.parentNode.insertBefore(headingContainer, h2);
+      headingContainer.appendChild(h2);
 
       const button = document.querySelector(`.button__anchor__blog.is-chap-${index + 1}`);
       if (button) {
@@ -350,12 +339,6 @@ function handleNavbarLogo() {
             scrollToElement(targetHeading, 1500);
           }
         });
-        
-        const iconButtonBlock = button.querySelector(`.icon__button__block.is-chap-${index + 1}`);
-        if (iconButtonBlock) {
-          const bgColor = window.getComputedStyle(iconButtonBlock).backgroundColor;
-          toggleChap.style.backgroundColor = bgColor;
-        }
       }
     });
 
