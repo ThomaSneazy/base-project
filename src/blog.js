@@ -326,12 +326,23 @@ function handleNavbarLogo() {
       const headingContainer = document.createElement('div');
       headingContainer.className = 'heading__blog__container';
       headingContainer.id = `heading-${index + 1}`;
+      headingContainer.style.display = 'flex';
+      headingContainer.style.gap = '2rem';
       
-      h2.parentNode.insertBefore(headingContainer, h2);
-      headingContainer.appendChild(h2);
-
+      const smallButtonChap = document.createElement('div');
+      smallButtonChap.className = 'small__button_chap';
+      
+      const toggleChap = document.createElement('div');
+      toggleChap.className = 'toggle__chap';
+      
       const button = document.querySelector(`.button__anchor__blog.is-chap-${index + 1}`);
       if (button) {
+        const iconButtonBlock = button.querySelector(`.icon__button__block.is-chap-${index + 1}`);
+        if (iconButtonBlock) {
+          const bgColor = window.getComputedStyle(iconButtonBlock).backgroundColor;
+          toggleChap.style.backgroundColor = bgColor;
+        }
+        
         button.style.display = 'block';
         button.addEventListener('click', () => {
           const targetHeading = document.getElementById(`heading-${index + 1}`);
@@ -340,6 +351,11 @@ function handleNavbarLogo() {
           }
         });
       }
+      
+      smallButtonChap.appendChild(toggleChap);
+      headingContainer.appendChild(smallButtonChap);
+      headingContainer.appendChild(h2);
+      h2.parentNode.insertBefore(headingContainer, h2);
     });
 
     for (let i = h2Elements.length + 1; i <= 5; i++) {
