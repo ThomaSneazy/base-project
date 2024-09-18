@@ -213,29 +213,29 @@ function setupProjectAnimation() {
 //     });
 // }
 
-//////////////////////LOGO NAVBAR BLACK///////////////////////
-function handleNavbarLogo() {
-    function updateNavbarLogo() {
-      const navbarLogo = document.querySelector('.navbar__logo');
-      if (navbarLogo) {
-        if (window.location.href.includes('projets')) {
-          navbarLogo.style.color = '#131313';
-        } else {
-          navbarLogo.style.color = ''; 
-        }
-      }
-    }
+// //////////////////////LOGO NAVBAR BLACK///////////////////////
+// function handleNavbarLogo() {
+//     function updateNavbarLogo() {
+//       const navbarLogo = document.querySelector('.navbar__logo');
+//       if (navbarLogo) {
+//         if (window.location.href.includes('projets')) {
+//           navbarLogo.style.color = '#131313';
+//         } else {
+//           navbarLogo.style.color = ''; 
+//         }
+//       }
+//     }
   
-    updateNavbarLogo();
+//     updateNavbarLogo();
   
-    window.addEventListener('popstate', updateNavbarLogo);
+//     window.addEventListener('popstate', updateNavbarLogo);
   
-    document.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', (e) => {
-        setTimeout(updateNavbarLogo, 0);
-      });
-    });
-  }
+//     document.querySelectorAll('a').forEach(link => {
+//       link.addEventListener('click', (e) => {
+//         setTimeout(updateNavbarLogo, 0);
+//       });
+//     });
+//   }
 
 
 
