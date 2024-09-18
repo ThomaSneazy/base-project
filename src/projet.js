@@ -2,13 +2,13 @@
 import { initLoader } from "./loader";
 
 function initProjetPage() {
+    initLoader();
     handleNavbarLogo();
     enhanceVimeoQuality();
     setupVimeoScriptRemoval();
     setupProjectAnimation();
     setupNavbarLogoColor();
     handleNavbarDropdown();
-    initLoader();
     stopLenis();
 }
 

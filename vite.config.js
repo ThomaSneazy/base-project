@@ -18,7 +18,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
-        '404': resolve(__dirname, 'src/404.js'),
+        error404: resolve(__dirname, 'src/error404.js'),
         blog: resolve(__dirname, 'src/blog.js'),
         campagne: resolve(__dirname, 'src/campagne.js'),
         contact: resolve(__dirname, 'src/contact.js'),
