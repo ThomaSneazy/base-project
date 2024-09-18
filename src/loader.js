@@ -89,16 +89,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Nouveau gestionnaire pour le retour en arrière
     window.addEventListener('popstate', (event) => {
-        event.preventDefault();
         animatePageTransition().then(() => {
-            // Au lieu de recharger la page, nous allons restaurer l'opacité
-            const pageWrapper = document.querySelector('.page-wrapper');
-            gsap.to(pageWrapper, {
-                opacity: 1,
-                y: 0,
-                duration: 1,
-                ease: 'power2.inOut'
-            });
+            // Recharger la page après l'animation
+            window.location.reload();
         });
     });
 });
