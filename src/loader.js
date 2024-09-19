@@ -121,10 +121,8 @@ if (document.readyState === 'loading') {
     if (shouldPlayLoader()) initLoader();
 }
 
-// Ajoutez ceci à la fin du fichier
 window.onpageshow = function(event) {
     if (event.persisted) {
-        // Réinitialiser l'opacité et la position du .page-wrapper
         const pageWrapper = document.querySelector('.page-wrapper');
         gsap.set(pageWrapper, { opacity: 1, y: 0 });
     }
