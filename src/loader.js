@@ -112,12 +112,25 @@ function shouldPlayLoader() {
     return false;
 }
 
+function applyFadeUpReset() {
+    const fadeUpElements = document.querySelectorAll('[fade-up]');
+    gsap.set(fadeUpElements, { y: 0, opacity: 1 });
+}
+
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
-        if (shouldPlayLoader()) initLoader();
+        if (shouldPlayLoader()) {
+            initLoader();
+        } else {
+            applyFadeUpReset();
+        }
     });
 } else {
-    if (shouldPlayLoader()) initLoader();
+    if (shouldPlayLoader()) {
+        initLoader();
+    } else {
+        applyFadeUpReset();
+    }
 }
 
 window.onpageshow = function(event) {
