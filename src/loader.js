@@ -57,6 +57,7 @@ export function initLoader() {
             onComplete: () => {
                 loader.style.display = 'none';
                 myFade();
+                window.addEventListener('scroll', checkScrollPosition);
                 localStorage.setItem('loaderPlayed', 'true');
             }
         });
