@@ -133,42 +133,31 @@ $(window).ready(function () {
 // });
 
 /////////////////BUTTON ARROW PLAY VIDEO ZOOM-IN////////////////////
-$(window).ready(function () {
-  $(".button-video-stuck").on("click", function () {
-    const button = this;
-    const videoBg = $(".video-bg");
-    const video = videoBg.find("video")[0];
+window.addEventListener('load', function() {
+  const button = document.querySelector(".button-video-stuck");
+  const videoBg = document.querySelector(".video-bg");
+  const video = videoBg.querySelector("video");
 
+  button.addEventListener("click", function() {
     gsap.to(button, {
       opacity: 0,
       duration: 0.5,
       ease: "power2.inOut",
-      onComplete: function () {
-        $(button).hide();
+      onComplete: function() {
+        button.style.display = "none";
       },
     });
 
-    if (window.innerWidth > 767) {
-      gsap.to(videoBg[0], {
-        width: "100vw",
-        height: "100vh",
-        opacity: 1,
-        duration: 1.3,
-        ease: "expo.inOut",
-        onStart: function () {
-          videoBg.css("z-index", "1000");
-        },
-      });
-    } else {
-      gsap.to(videoBg[0], {
-        opacity: 1,
-        duration: 0.5,
-        ease: "power2.inOut",
-        onStart: function () {
-          videoBg.css("z-index", "1000");
-        },
-      });
-    }
+    gsap.to(videoBg, {
+      width: "100%",
+      height: "100%",
+      opacity: 1,
+      duration: 1.3,
+      ease: "expo.inOut",
+      onStart: function() {
+        videoBg.style.zIndex = "1000";
+      },
+    });
 
     if (video) {
       video.play();
