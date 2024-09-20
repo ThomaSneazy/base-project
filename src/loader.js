@@ -11,7 +11,7 @@ export function initLoader() {
 
     setTimeout(() => {
         gsap.fromTo(loaderLogo, 
-            { y: 100, opacity: 0 }, //VOIR ICI PASSER EN 30PX ??? MOVE Y
+            { y: 30, opacity: 0 }, //VOIR ICI PASSER EN 30PX ??? MOVE Y
             { 
                 y: 0, 
                 opacity: 1,
@@ -67,7 +67,6 @@ export function animatePageTransition(isBackNavigation = false) {
     const pageWrapper = document.querySelector('.page-wrapper');
     
     if (isBackNavigation) {
-        // Réinitialiser l'opacité et la position pour le retour en arrière
         gsap.set(pageWrapper, { opacity: 1, y: 0 });
         return Promise.resolve();
     }
