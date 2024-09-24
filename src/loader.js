@@ -98,10 +98,6 @@ document.addEventListener('DOMContentLoaded', () => {
             // Pas besoin de recharger la page, l'animation est gérée différemment
         });
     });
-
-    // Appel de la fonction pour forcer l'affichage des éléments fade-up
-    forceFadeUpElements();
-    window.addEventListener('scroll', forceFadeUpElements);
 });
 
 function shouldPlayLoader() {
@@ -130,20 +126,5 @@ window.onpageshow = function(event) {
         gsap.set(pageWrapper, { opacity: 1, y: 0 });
     }
 };
-
-function forceFadeUpElements() {
-    const fadeUpElements = document.querySelectorAll('[fade-up]');
-    const scrollPosition = window.scrollY + window.innerHeight / 2;
-    const documentHeight = document.documentElement.scrollHeight;
-
-    fadeUpElements.forEach(element => {
-        const elementPosition = element.getBoundingClientRect().top + window.scrollY;
-        const elementPercentage = (elementPosition / documentHeight) * 100;
-
-        if (elementPercentage <= (scrollPosition / documentHeight) * 100) {
-            gsap.set(element, { opacity: 1, y: 0 });
-        }
-    });
-}
 
 
