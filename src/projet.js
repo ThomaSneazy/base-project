@@ -1,15 +1,15 @@
-// import { initLoader } from "./loader";
+import { initLoader } from "./loader";
 
-// function initProjetPage() {
-//     initLoader();
-//     // handleNavbarLogo();
-//     enhanceVimeoQuality();
-//     setupVimeoScriptRemoval();
-//     // setupProjectAnimation();
-//     setupNavbarLogoColor();
-//     handleNavbarDropdown();
-//     stopLenis();
-// }
+function initProjetPage() {
+    initLoader();
+    // // handleNavbarLogo();
+    // enhanceVimeoQuality();
+    // setupVimeoScriptRemoval();
+    // // setupProjectAnimation();
+    // setupNavbarLogoColor();
+    // handleNavbarDropdown();
+    // stopLenis();
+}
 
 // function stopLenis() {
 //     lenis.destroy();
@@ -333,4 +333,4 @@
 
 
 
-// document.addEventListener('DOMContentLoaded', initProjetPage);
+document.addEventListener('DOMContentLoaded', initProjetPage);
