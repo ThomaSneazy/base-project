@@ -82,13 +82,15 @@ export function animatePageTransition(isBackNavigation = false) {
 document.addEventListener('DOMContentLoaded', () => {
     document.body.addEventListener('click', (e) => {
         const link = e.target.closest('a');
-        if (link && link.getAttribute('href').startsWith('/')) {
-            e.preventDefault();
+        if (link) {
             const href = link.getAttribute('href');
-            
-            animatePageTransition().then(() => {
-                window.location.href = href;
-            });
+            if (href.startsWith('/') || href.includes('/projets')) {
+                e.preventDefault();
+                
+                animatePageTransition().then(() => {
+                    window.location.href = href;
+                });
+            }
         }
     });
 
