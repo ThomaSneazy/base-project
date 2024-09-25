@@ -1,4 +1,3 @@
-
 import { initLoader } from "./loader";
 
 function initProjetPage() {
@@ -307,7 +306,7 @@ function handleNavbarDropdown() {
                 showDropdown();
             } else if (event.type === 'mouseleave') {
                 timeoutId = setTimeout(() => {
-                    if (!$dropdownWrapper.is(":hover")) {
+                    if (!$buttonDrop.is(':hover')) {
                         hideDropdown();
                     }
                 }, 100);
@@ -320,7 +319,7 @@ function handleNavbarDropdown() {
     $dropdownWrapper.on("mouseleave", () => {
         if (!isSmallScreen) {
             timeoutId = setTimeout(() => {
-                if (!$buttonDrop.is(":hover")) {
+                if (!$buttonDrop.is(':hover')) {
                     hideDropdown();
                 }
             }, 100);
