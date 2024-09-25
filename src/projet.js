@@ -6,7 +6,7 @@ function initProjetPage() {
     // handleNavbarLogo();
     enhanceVimeoQuality();
     setupVimeoScriptRemoval();
-    // setupProjectAnimation();
+    setupProjectAnimation();
     setupNavbarLogoColor();
     handleNavbarDropdown();
     stopLenis();
@@ -77,125 +77,125 @@ function setupVimeoScriptRemoval() {
     });
 }
 
-// ///////////////ANIMATION OPACITY AND MOVE ON ACTIVE PROJECT BUT GLITCH ON NEW PROJECT CAUSE OF VIDEO??//////////////////
-// function setupProjectAnimation() {
-//     const desktopButtons = document.querySelectorAll('.left [data-project-name]');
-//     const mobileButtons = document.querySelectorAll('.mobile-buttons [data-project-name]');
-//     const projectList = document.querySelector('.project__list');
-//     const projects = projectList ? projectList.querySelectorAll('.project__item') : [];
-//     const rightContainer = document.querySelector('.right');
+///////////////ANIMATION OPACITY AND MOVE ON ACTIVE PROJECT BUT GLITCH ON NEW PROJECT CAUSE OF VIDEO??//////////////////
+function setupProjectAnimation() {
+    const desktopButtons = document.querySelectorAll('.left [data-project-name]');
+    const mobileButtons = document.querySelectorAll('.mobile-buttons [data-project-name]');
+    const projectList = document.querySelector('.project__list');
+    const projects = projectList ? projectList.querySelectorAll('.project__item') : [];
+    const rightContainer = document.querySelector('.right');
 
-//     function showProject(projectName, isMobile = false) {
-//         const activeProject = Array.from(projects).find(project => project.style.display === 'block');
-//         const newProject = Array.from(projects).find(project => project.getAttribute('data-project-name') === projectName);
+    function showProject(projectName, isMobile = false) {
+        const activeProject = Array.from(projects).find(project => project.style.display === 'block');
+        const newProject = Array.from(projects).find(project => project.getAttribute('data-project-name') === projectName);
 
-//         if (activeProject) {
-//             if (isMobile) {
-//                 gsap.to(activeProject, {
-//                     opacity: 0,
-//                     duration: 0.4,
-//                     ease: "power2.out",
-//                     onComplete: () => {
-//                         activeProject.style.display = 'none';
-//                         showNewProject();
-//                     }
-//                 });
-//             } else {
-//                 gsap.to(activeProject, {
-//                     x: '100%',
-//                     opacity: 0,
-//                     duration: 0.8,
-//                     ease: "power3.inOut",
-//                     onComplete: () => {
-//                         activeProject.style.display = 'none';
-//                         gsap.set(activeProject, { x: '0%', opacity: 1 });
-//                         showNewProject();
-//                     }
-//                 });
-//             }
-//         } else {
-//             showNewProject();
-//         }
+        if (activeProject) {
+            if (isMobile) {
+                gsap.to(activeProject, {
+                    opacity: 0,
+                    duration: 0.4,
+                    ease: "power2.out",
+                    onComplete: () => {
+                        activeProject.style.display = 'none';
+                        showNewProject();
+                    }
+                });
+            } else {
+                gsap.to(activeProject, {
+                    x: '100%',
+                    opacity: 0,
+                    duration: 0.8,
+                    ease: "power3.inOut",
+                    onComplete: () => {
+                        activeProject.style.display = 'none';
+                        gsap.set(activeProject, { x: '0%', opacity: 1 });
+                        showNewProject();
+                    }
+                });
+            }
+        } else {
+            showNewProject();
+        }
 
-//         function showNewProject() {
-//             if (newProject) {
-//                 projects.forEach(project => {
-//                     if (project !== newProject) {
-//                         project.style.display = 'none';
-//                     }
-//                 });
+        function showNewProject() {
+            if (newProject) {
+                projects.forEach(project => {
+                    if (project !== newProject) {
+                        project.style.display = 'none';
+                    }
+                });
 
-//                 if (rightContainer) {
-//                     rightContainer.scrollTop = 0;
-//                 }
+                if (rightContainer) {
+                    rightContainer.scrollTop = 0;
+                }
 
-//                 newProject.style.display = 'block';
-//                 if (isMobile) {
-//                     gsap.fromTo(newProject,
-//                         { opacity: 0 },
-//                         {
-//                             opacity: 1,
-//                             duration: 0.4,
-//                             ease: "power2.in"
-//                         }
-//                     );
-//                 } else {
-//                     gsap.fromTo(newProject,
-//                         { y: '15%', opacity: 0 },
-//                         {
-//                             y: '0%',
-//                             opacity: 1,
-//                             duration: 1.2,
-//                             ease: "power2.out"
-//                         }
-//                     );
-//                 }
-//             }
-//         }
+                newProject.style.display = 'block';
+                if (isMobile) {
+                    gsap.fromTo(newProject,
+                        { opacity: 0 },
+                        {
+                            opacity: 1,
+                            duration: 0.4,
+                            ease: "power2.in"
+                        }
+                    );
+                } else {
+                    gsap.fromTo(newProject,
+                        { y: '15%', opacity: 0 },
+                        {
+                            y: '0%',
+                            opacity: 1,
+                            duration: 1.2,
+                            ease: "power2.out"
+                        }
+                    );
+                }
+            }
+        }
 
-//         updateButtonStates(projectName);
-//     }
+        updateButtonStates(projectName);
+    }
 
-//     function updateButtonStates(projectName) {
-//         [desktopButtons, mobileButtons].forEach(buttonSet => {
-//             buttonSet.forEach(button => {
-//                 const projectToggle = button.querySelector('.project__toggle');
-//                 if (button.getAttribute('data-project-name') === projectName) {
-//                     button.classList.add('active');
-//                     if (projectToggle) projectToggle.classList.add('active');
-//                 } else {
-//                     button.classList.remove('active');
-//                     if (projectToggle) projectToggle.classList.remove('active');
-//                 }
-//             });
-//         });
-//     }
+    function updateButtonStates(projectName) {
+        [desktopButtons, mobileButtons].forEach(buttonSet => {
+            buttonSet.forEach(button => {
+                const projectToggle = button.querySelector('.project__toggle');
+                if (button.getAttribute('data-project-name') === projectName) {
+                    button.classList.add('active');
+                    if (projectToggle) projectToggle.classList.add('active');
+                } else {
+                    button.classList.remove('active');
+                    if (projectToggle) projectToggle.classList.remove('active');
+                }
+            });
+        });
+    }
 
-//     if (projects.length > 0) {
-//         projects.forEach(project => {
-//             project.style.display = 'none';
-//         });
+    if (projects.length > 0) {
+        projects.forEach(project => {
+            project.style.display = 'none';
+        });
 
-//         const firstProjectName = projects[0].getAttribute('data-project-name');
-//         showProject(firstProjectName);
-//     } else {
-//         console.error('Aucun projet trouvé dans .project__list');
-//     }
+        const firstProjectName = projects[0].getAttribute('data-project-name');
+        showProject(firstProjectName);
+    } else {
+        console.error('Aucun projet trouvé dans .project__list');
+    }
 
-//     desktopButtons.forEach(button => {
-//         button.addEventListener('click', () => {
-//             const projectName = button.getAttribute('data-project-name');
-//             showProject(projectName, false);
-//         });
-//     });
+    desktopButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const projectName = button.getAttribute('data-project-name');
+            showProject(projectName, false);
+        });
+    });
 
-//     mobileButtons.forEach(button => {
-//         button.addEventListener('click', () => {
-//             const projectName = button.getAttribute('data-project-name');
-//             showProject(projectName, true);
-//         });
-//     });
-// }
+    mobileButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const projectName = button.getAttribute('data-project-name');
+            showProject(projectName, true);
+        });
+    });
+}
 
 // Fonction pour mettre à jour la couleur du logo de la navbar
 function setupNavbarLogoColor() {
