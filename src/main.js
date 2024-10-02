@@ -13,7 +13,7 @@ console.log('main.js');
 
 
 
-///////////BENTO GRID ARTICLES///////////////
+///////////BENTO GRID ARTICLES/////////////
 window.addEventListener('load', function () {
   const items = document.querySelectorAll('.adobe__item, .novum__item, .awwward__item, .behance__item');
   const shuffledItems = gsap.utils.shuffle([...items]);
